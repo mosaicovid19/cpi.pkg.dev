@@ -246,7 +246,7 @@ for(st in c(1:27)[-c(6,7,11,23,27)]){
   setwd(root)
 
   # read data set here!
-  basico <- read.csv(paste0("BASICO_",estado,".csv"), header = TRUE, sep = ";",check.names = FALSE,encoding = "UTF-8")
+  basico <- read.csv(paste0("Basico_",estado,".csv"), header = TRUE, sep = ";",check.names = FALSE,encoding = "UTF-8")
   entorno <- read.csv(paste0("Entorno03_",estado,".csv"), header = TRUE, sep = ";",encoding = "UTF-8")
   dom.i <- read.csv(paste0("Domicilio01_",estado,".csv"), header = TRUE, sep = ";",encoding = "UTF-8")
   dom.ii <- read.csv(paste0("Domicilio02_",estado,".csv"), header = TRUE, sep=";",encoding = "UTF-8")
