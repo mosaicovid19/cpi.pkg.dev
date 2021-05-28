@@ -1,14 +1,6 @@
 rm(list = ls())
-library(fpc)
-library(cluster)
-library(kmed)
-library(e1071)
-library(dplyr)
-library(ggplot2)
-require(stringr)
-
-require("curl")
-require(bit64)
+library(tidyverse)
+library(readxl)
 
 # setwd("C:/Users/pchir/Downloads/CSV_RJ")
 #
@@ -220,8 +212,6 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda){
 ### todos os estados ###
 set.seed(1234)
 
-library(dplyr)
-#library(devtools)
 #install_github("pchiroque/vulindex")
 #library(vulindex)
 
@@ -234,7 +224,6 @@ states <- c("AC","AL","AM","AP","BA","CE","DF","ES","GO","MA","MG",
 #"CE" "DF" "MG" "RS" "TO"
 
 #st=19
-library (readr)
 full <- NULL
 for(st in c(1:27)[-c(6,7,11,23,27)]){
 
@@ -265,8 +254,6 @@ ipc.full <- full
 
 load("C:/Users/pchir/Google Drive/AcaoCovid/indice_vulnerabilidade-master/Pacote_IPC/IPC_FULL.rda")
 
-
-library("readxl")
 
 ipc.Cap_states <- ipc.full%>%group_by(UF)%>%summarise_at("ipc",mean)%>%
   `colnames<-`(c("state","ipc"))
