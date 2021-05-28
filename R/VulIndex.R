@@ -1,4 +1,4 @@
-VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda){
+VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda, resp.alfa){
   # definiÃ§Ã£o das variÃ¡veis que farÃ£o parte do DataFrame final
   features <- c("V001","V001p","V001r","V003", "V004", "V005", "V006","V422", "V423", "V425", "V427", "V429", "V431", "V433", "V435", "V437", "V439", "V447", "V449", "V451", "V453", "V455", "V457",
                 "V472", "V474", "V476", "V478", "V480", "V482", "V050", "V051", "V052", "V053", "V054", "V055", "V056", "V057", "V058", "V059",

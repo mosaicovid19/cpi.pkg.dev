@@ -37,7 +37,8 @@ sapply(estados, function(estado) {
     dom.i = dom.i,
     dom.ii = dom.ii,
     pessoa = pessoa,
-    dom.renda = dom.renda
+    dom.renda = dom.renda,
+    resp.alfa = resp.alfa
   )
 })
 
