@@ -1,4 +1,4 @@
-VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda, resp.alfa){
+VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda){
   # definiÃ§Ã£o das variÃ¡veis que farÃ£o parte do DataFrame final
   features <- c("V001","V001p","V001r","V003", "V004", "V005", "V006","V422", "V423", "V425", "V427", "V429", "V431", "V433", "V435", "V437", "V439", "V447", "V449", "V451", "V453", "V455", "V457",
                 "V472", "V474", "V476", "V478", "V480", "V482", "V050", "V051", "V052", "V053", "V054", "V055", "V056", "V057", "V058", "V059",
@@ -41,8 +41,6 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda, resp.alfa){
   dom.i <- dom.i %>%
     mutate_at(vars(V050, V051, V052, V053, V054, V055, V056, V057, V058, V059, V081, V082, V083, V084, V085, V086, V087), function(x) as.numeric(as.character(x)))
 
-  # recuperar número de moradores - a base tem o número de domicílios
-  # https://www.ipea.gov.br/redeipea/images/pdfs/base_de_informacoess_por_setor_censitario_universo_censo_2010.pdf
 
   # cada variÃ¡vel do DataFrame dom.i se refere a nÃºmero de pessoas vivendo num determinado domicÃ­lio
   # como a idÃ©ia Ã© ter nÃºmero de pessoas por domicÃ­lio numa dada condiÃ§Ã£o, fazemos o multiplicaÃ§Ã£o do nÃºmero de domicÃ­lios pelo nÃºmero de pessoas
@@ -113,9 +111,7 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda, resp.alfa){
     #Esgoto
     rowSums(features.abs[, c("V472", "V474", "V476")])/features.abs$V422 * (1/7) +
     #Lixo
-    rowSums(
-      features.abs[, c("V478", "V480", "V482")]
-      )/features.abs$V422 * (1/7)
+    rowSums(features.abs[, c("V478", "V480", "V482")])/features.abs$V422 * (1/7)
 
   # Calcula componente de calculo mais de duas pessoas por domicÃ­lio
   # Calcula % de pessoas que moram sÃ³s ou com atÃ© mais uma outra pessoa
@@ -123,7 +119,8 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda, resp.alfa){
   # 2 - Subtrai de 1, a qtde de pessoas que vivem com mais do que 2 pessoas em residÃªncias sustentadas por mulheres
   # 3 - Divide o resultado de 2 pelo nÃºmero total de pessoas vivendo com mais do que 2 pessoas
   comp5maisdomicilio <-
-    (1 - (rowSums(features.abs[, c("V055", "V056", "V057", "V058", "V059")])/(features.abs$V422))) * (1/5)
+    (1 - (rowSums(features.abs[, c("V055", "V056", "V057", "V058", "V059")])/
+            (features.abs[, c("V422")]))) * (1/5)
 
   # Calcula % de pessoas com acesso a banheiro de uso exclusivo
   compbanheiro <-
@@ -159,7 +156,6 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda, resp.alfa){
   # subtraindo as componentes de banheiros e agua para nÃ£o penalizar as regiÃµes 100% estruturadas nesse quesito
   # ipc <- (compDomRenda * .5) + (compEntorno * .2) + (compDomicilios * .2) + (compPessoas * .05)
   ipc <- (compEntorno * (1/3)) + (compPessoas * (1/3)) + (compDomicilios * (1/3))
-  ipc <- ipc %>% rename(ipc = V001p)
 
   # adiciona a coluna IVC ao DataFrame que contem as informaÃ§Ãµes que permitem identificar o bairro de cada setor censitÃ¡rio
   resumoFinal <- cbind(resumo, ipc)
