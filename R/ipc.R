@@ -1,6 +1,10 @@
 library(tidyverse)
+library(readxl)
 
 source("R/VulIndex.R", encoding = "UTF-8")
+
+## localização dos dados brutos
+censo_dir <- file.path("~/Downloads/Censo2010")
 
 estados <- c(
   # "CE",
