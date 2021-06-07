@@ -120,7 +120,7 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda){
   # 3 - Divide o resultado de 2 pelo nÃºmero total de pessoas vivendo com mais do que 2 pessoas
   comp5maisdomicilio <-
     (1 - (rowSums(features.abs[, c("V055", "V056", "V057", "V058", "V059")])/
-            (features.abs[, c("V422")]))) * (1/5)
+            (features.abs$V422))) * (1/5)
 
   # Calcula % de pessoas com acesso a banheiro de uso exclusivo
   compbanheiro <-
