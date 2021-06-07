@@ -1,14 +1,22 @@
 library(tidyverse)
+library(readxl)
 
 source("R/VulIndex.R", encoding = "UTF-8")
 
+## localização dos dados brutos
+censo_dir <- file.path("~/Downloads/Censo2010")
+
 estados <- c(
-  # "CE",
-  # "RJ"
-  "ES"
+  "CE",
+  "DF",
+  "MG",
+  "RS",
+  "TO"
 )
 
-sapply(estados, function(estado) {
+full <- NULL
+
+for (estado in estados) {
   print(estado)
   bases <- c(
       Basico = file.path(censo_dir, paste0("Basico_", estado, ".xls")),
@@ -31,7 +39,7 @@ sapply(estados, function(estado) {
   dom.renda <- read_excel(bases["Dom.Renda"])
   resp.alfa <- read_excel(bases["Resp.Alfa"]) # não está sendo usado pela função
 
-  VulIndex(
+  ipc_f <- VulIndex(
     basico = basico,
     entorno = entorno,
     dom.i = dom.i,
@@ -40,5 +48,7 @@ sapply(estados, function(estado) {
     dom.renda = dom.renda,
     resp.alfa = resp.alfa
   )
-})
-
+  ipc_f$Nome_UF <- estado
+  full <- rbind(full,ipc_f)
+  full <- as_tibble(full)
+}

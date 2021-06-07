@@ -1,4 +1,4 @@
-VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda){
+VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa){
   # definiÃ§Ã£o das variÃ¡veis que farÃ£o parte do DataFrame final
   features <- c("V001","V001p","V001r","V003", "V004", "V005", "V006","V422", "V423", "V425", "V427", "V429", "V431", "V433", "V435", "V437", "V439", "V447", "V449", "V451", "V453", "V455", "V457",
                 "V472", "V474", "V476", "V478", "V480", "V482", "V050", "V051", "V052", "V053", "V054", "V055", "V056", "V057", "V058", "V059",
@@ -120,15 +120,15 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda){
   # 3 - Divide o resultado de 2 pelo nÃºmero total de pessoas vivendo com mais do que 2 pessoas
   comp5maisdomicilio <-
     (1 - (rowSums(features.abs[, c("V055", "V056", "V057", "V058", "V059")])/
-            (features.abs[, c("V422")]))) * (1/5)
+            (features.abs$V422))) * (1/5)
 
   # Calcula % de pessoas com acesso a banheiro de uso exclusivo
   compbanheiro <-
-    (features.abs[,c("V016")]/features.abs[,c("V001")]) * (1/5)
+    rowSums(features.abs[,c("V016")]/features.abs$V001) * (1/5)
 
   # Calcula % de pessoas com acesso a rede de distribuiÃ§Ã£o de Ã¡gua
   compagua <-
-    (features.abs[,c("V012")]/features.abs[,c("V001")]) * (1/5)
+    rowSums(features.abs[,c("V012")]/features.abs$V001) * (1/5)
 
   compDomRenda <- compDomRenda * (2/5)
   compDomicilios <- compagua + compbanheiro + comp5maisdomicilio + compDomRenda
@@ -138,17 +138,17 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda){
     # Qtd pessoas domicios com mulheres como mantenedoras / Qtd pessoas dos domicilios
     (1-(rowSums(features.abs[,
                              c("V081","V082", "V083", "V084", "V085", "V086", "V087")]))/
-       features.abs[, c("V422")]) * (1/3)
+       features.abs$V422) * (1/3)
 
 
   # calcula % Pessoas brancas
   compPessoas <-
     (1 - rowSums(features.abs[,
-                              c("V003", "V004", "V005", "V006")])/features.abs[,c("V001p")])*1/3
+                              c("V003", "V004", "V005", "V006")])/features.abs$V001p)*1/3
 
   # calcula % responsaveis analfa.
   compRespAlfa <-
-    (1 - features.abs[,c("V093")]/features.abs[,c("V001r")])*1/3
+    (1 - rowSums(features.abs[,c("V093")]/features.abs$V001r))*1/3
 
   compPessoas <- compPessoas + compDomiciliosMulher + compRespAlfa
 
