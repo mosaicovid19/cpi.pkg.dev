@@ -8,8 +8,10 @@ censo_dir <- file.path("~/Downloads/Censo2010")
 
 estados <- c(
   "CE",
-  "RJ"
-  # "ES"
+  "DF",
+  "MG",
+  "RS",
+  "TO"
 )
 
 full <- NULL
