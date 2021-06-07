@@ -48,5 +48,6 @@ lapply(estados, function(estado) {
   )
   ipc_f$Nome_UF <- estado
   full <- rbind(full,ipc_f)
+  full <- as_tibble(full)
 })
 
