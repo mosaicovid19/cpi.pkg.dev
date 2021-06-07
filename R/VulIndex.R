@@ -148,7 +148,7 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda){
 
   # calcula % responsaveis analfa.
   compRespAlfa <-
-    (1 - features.abs[,c("V093")]/features.abs[,c("V001r")])*1/3
+    (1 - features.abs[,c("V093")]/features.abs$V001r)*1/3
 
   compPessoas <- compPessoas + compDomiciliosMulher + compRespAlfa
 
