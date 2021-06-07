@@ -8,6 +8,8 @@ estados <- c(
   "ES"
 )
 
+full <- NULL
+
 lapply(estados, function(estado) {
   print(estado)
   bases <- c(
@@ -31,7 +33,7 @@ lapply(estados, function(estado) {
   dom.renda <- read_excel(bases["Dom.Renda"])
   resp.alfa <- read_excel(bases["Resp.Alfa"]) # não está sendo usado pela função
 
-  VulIndex(
+  ipc_f <- VulIndex(
     basico = basico,
     entorno = entorno,
     dom.i = dom.i,
@@ -40,5 +42,7 @@ lapply(estados, function(estado) {
     dom.renda = dom.renda,
     resp.alfa = resp.alfa
   )
+  ipc_f$Nome_UF <- estado
+  full <- rbind(full,ipc_f)
 })
 
