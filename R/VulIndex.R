@@ -138,7 +138,7 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda){
     # Qtd pessoas domicios com mulheres como mantenedoras / Qtd pessoas dos domicilios
     (1-(rowSums(features.abs[,
                              c("V081","V082", "V083", "V084", "V085", "V086", "V087")]))/
-       features.abs[, c("V422")]) * (1/3)
+       features.abs$V422) * (1/3)
 
 
   # calcula % Pessoas brancas
