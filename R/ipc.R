@@ -8,7 +8,7 @@ estados <- c(
   "ES"
 )
 
-sapply(estados, function(estado) {
+lapply(estados, function(estado) {
   print(estado)
   bases <- c(
       Basico = file.path(censo_dir, paste0("Basico_", estado, ".xls")),
