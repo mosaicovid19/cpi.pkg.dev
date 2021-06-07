@@ -144,7 +144,7 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda){
   # calcula % Pessoas brancas
   compPessoas <-
     (1 - rowSums(features.abs[,
-                              c("V003", "V004", "V005", "V006")])/features.abs[,c("V001p")])*1/3
+                              c("V003", "V004", "V005", "V006")])/features.abs$V001p)*1/3
 
   # calcula % responsaveis analfa.
   compRespAlfa <-
