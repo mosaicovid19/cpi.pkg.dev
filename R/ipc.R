@@ -14,7 +14,7 @@ estados <- c(
 
 full <- NULL
 
-full <- lapply(estados, function(estado) {
+for (estado in estados) {
   print(estado)
   bases <- c(
       Basico = file.path(censo_dir, paste0("Basico_", estado, ".xls")),
@@ -49,5 +49,4 @@ full <- lapply(estados, function(estado) {
   ipc_f$Nome_UF <- estado
   full <- rbind(full,ipc_f)
   full <- as_tibble(full)
-})
-
+}
