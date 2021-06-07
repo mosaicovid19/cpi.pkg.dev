@@ -7,14 +7,14 @@ source("R/VulIndex.R", encoding = "UTF-8")
 censo_dir <- file.path("~/Downloads/Censo2010")
 
 estados <- c(
-  # "CE",
-  # "RJ"
-  "ES"
+  "CE",
+  "RJ"
+  # "ES"
 )
 
 full <- NULL
 
-lapply(estados, function(estado) {
+full <- lapply(estados, function(estado) {
   print(estado)
   bases <- c(
       Basico = file.path(censo_dir, paste0("Basico_", estado, ".xls")),
