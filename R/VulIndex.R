@@ -124,7 +124,7 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda){
 
   # Calcula % de pessoas com acesso a banheiro de uso exclusivo
   compbanheiro <-
-    (features.abs[,c("V016")]/features.abs[,c("V001")]) * (1/5)
+    (features.abs[,c("V016")]/features.abs$V001) * (1/5)
 
   # Calcula % de pessoas com acesso a rede de distribuiÃ§Ã£o de Ã¡gua
   compagua <-
