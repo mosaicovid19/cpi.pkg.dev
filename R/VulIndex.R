@@ -124,11 +124,11 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda){
 
   # Calcula % de pessoas com acesso a banheiro de uso exclusivo
   compbanheiro <-
-    (features.abs[,c("V016")]/features.abs$V001) * (1/5)
+    rowSums(features.abs[,c("V016")]/features.abs$V001) * (1/5)
 
   # Calcula % de pessoas com acesso a rede de distribuiÃ§Ã£o de Ã¡gua
   compagua <-
-    (features.abs[,c("V012")]/features.abs$V001) * (1/5)
+    rowSums(features.abs[,c("V012")]/features.abs$V001) * (1/5)
 
   compDomRenda <- compDomRenda * (2/5)
   compDomicilios <- compagua + compbanheiro + comp5maisdomicilio + compDomRenda
@@ -148,7 +148,7 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda){
 
   # calcula % responsaveis analfa.
   compRespAlfa <-
-    (1 - features.abs[,c("V093")]/features.abs$V001r)*1/3
+    (1 - rowSums(features.abs[,c("V093")]/features.abs$V001r))*1/3
 
   compPessoas <- compPessoas + compDomiciliosMulher + compRespAlfa
 
