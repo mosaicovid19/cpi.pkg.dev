@@ -97,36 +97,11 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa){
 
 # calculo componentes -----------------------------------------------------
 
-  # Cria cluster por faixa de renda
-  # calcula a componente Renda e aplica o peso
-  compDomRenda <- ifelse(features.abs$V002/features.abs$V001p>2090,1,
-                         ifelse(features.abs$V002/features.abs$V001p>1045,0.7,
-                                ifelse(features.abs$V002/features.abs$V001p>522.5,0.5,
-                                       ifelse(features.abs$V002/features.abs$V001p>178,0.3,
-                                              ifelse(features.abs$V002/features.abs$V001p>89,0.2,0.1)))))
-
   # calcula a componente Entorno do IVC e aplica os pesos
   compEntorno <- comp_entorno(features.abs)
 
-  # Calcula componente de calculo mais de duas pessoas por domicÃ­lio
-  # Calcula % de pessoas que moram sÃ³s ou com atÃ© mais uma outra pessoa
-  # 1 - Soma a qtde de pessoas que vivem com mais do que 5 pessoas (total)
-  # 2 - Subtrai de 1, a qtde de pessoas que vivem com mais do que 2 pessoas em residÃªncias sustentadas por mulheres
-  # 3 - Divide o resultado de 2 pelo nÃºmero total de pessoas vivendo com mais do que 2 pessoas
-  comp5maisdomicilio <-
-    (1 - (rowSums(features.abs[, c("V055", "V056", "V057", "V058", "V059")])/
-            (features.abs$V422))) * (1/5)
-
-  # Calcula % de pessoas com acesso a banheiro de uso exclusivo
-  compbanheiro <-
-    rowSums(features.abs[,c("V016")]/features.abs$V001) * (1/5)
-
-  # Calcula % de pessoas com acesso a rede de distribuiÃ§Ã£o de Ã¡gua
-  compagua <-
-    rowSums(features.abs[,c("V012")]/features.abs$V001) * (1/5)
-
-  compDomRenda <- compDomRenda * (2/5)
-  compDomicilios <- compagua + compbanheiro + comp5maisdomicilio + compDomRenda
+  # calcula o componente Domicílios e aplica os pesos
+  compDomicilios <- comp_domicilio(features.abs)
 
   # calcula a componente Docmicilios com mulheres como mantenedoras e aplica os pesos
   compDomiciliosMulher <-
