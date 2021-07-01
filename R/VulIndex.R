@@ -151,11 +151,23 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa){
   resumoFinal$ipc <- resumoFinal$ipc
   # resumoFinal$ivc <- resumoFinal$ipc + compUBS * 1
 
-  resumo.final <- cbind(resumoFinal, compDomRenda, compEntorno, compDomiciliosMulher, comp5maisdomicilio, compbanheiro, compagua, compPessoas)
+  resumo.final <- cbind(resumoFinal,
+                        #compDomRenda,
+                        compEntorno,
+                        compDomiciliosMulher,
+                        #comp5maisdomicilio,
+                        #compbanheiro,
+                        #compagua,
+                        compPessoas)
 
   resumo.final <- select(resumo.final, c(Cod_UF,Cod_setor, Cod_municipio,Nome_do_municipio,
-                                         Cod_bairro, Nome_do_bairro, ipc,compEntorno, compDomRenda, compDomiciliosMulher,
-                                         comp5maisdomicilio, compbanheiro, compagua, compPessoas))
+                                         Cod_bairro, Nome_do_bairro, ipc,compEntorno,
+                                         # compDomRenda,
+                                         compDomiciliosMulher,
+                                         # comp5maisdomicilio,
+                                         # compbanheiro,
+                                         # compagua,
+                                         compPessoas))
 
   return(resumo.final)
 
