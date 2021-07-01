@@ -31,13 +31,13 @@ for (estado in estados) {
   # % dos arquivos encontrados
   stopifnot( mean(unlist(lapply(bases, file.exists))) == 1)
 
-  basico <- read_excel(bases["Basico"])
-  entorno <- read_excel(bases["Entorno"])
-  dom.i <- read_excel(bases["Domicilio01"])
-  dom.ii <- read_excel(bases["Domicilio02"])
-  pessoa <- read_excel(bases["Pessoa"])
-  dom.renda <- read_excel(bases["Dom.Renda"])
-  resp.alfa <- read_excel(bases["Resp.Alfa"]) # não está sendo usado pela função
+  basico <- read_excel(bases["Basico"], na = "X")
+  entorno <- read_excel(bases["Entorno"], na = "X")
+  dom.i <- read_excel(bases["Domicilio01"], na = "X")
+  dom.ii <- read_excel(bases["Domicilio02"], na = "X")
+  pessoa <- read_excel(bases["Pessoa"], na = "X")
+  dom.renda <- read_excel(bases["Dom.Renda"], na = "X")
+  resp.alfa <- read_excel(bases["Resp.Alfa"], na = "X") # não está sendo usado pela função
 
   ipc_f <- VulIndex(
     basico = basico,

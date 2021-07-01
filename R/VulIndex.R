@@ -43,8 +43,8 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa){
   resp.alfa <- select(filter(resp.alfa, V093 != "X"), -Mun)
 
   # altera o tipo das variÃ¡veis do DataFrame dom.i para numÃ©rico
-  dom.i <- dom.i %>%
-    mutate_at(vars(V050, V051, V052, V053, V054, V055, V056, V057, V058, V059, V081, V082, V083, V084, V085, V086, V087), function(x) as.numeric(as.character(x)))
+  # dom.i <- dom.i %>%
+  #   mutate_at(vars(V050, V051, V052, V053, V054, V055, V056, V057, V058, V059, V081, V082, V083, V084, V085, V086, V087), function(x) as.numeric(as.character(x)))
 
 
   # cada variÃ¡vel do DataFrame dom.i se refere a nÃºmero de pessoas vivendo num determinado domicÃ­lio
@@ -89,7 +89,7 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa){
   resumo <- inner_join(bairros, filter(resumo, V422!="0"), by=c("Cod_setor"))
 
   # converte todas as variÃ¡veis para o tipo numÃ©rico
-  selected.features <- mutate_all(selected.features, function(x) as.numeric(as.character(x)))
+  # selected.features <- mutate_all(selected.features, function(x) as.numeric(as.character(x)))
 
 
   # calcula a proporÃ§Ã£o de pessoas vivendo nas condiÃ§Ãµes descritas pelas variÃ¡veis selecionadas
