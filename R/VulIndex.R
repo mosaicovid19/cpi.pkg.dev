@@ -1,4 +1,7 @@
 VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa){
+
+# vars --------------------------------------------------------------------
+
   # definiÃ§Ã£o das variÃ¡veis que farÃ£o parte do DataFrame final
   features <- c("V001","V001p","V001r","V003", "V004", "V005", "V006","V422", "V423", "V425", "V427", "V429", "V431", "V433", "V435", "V437", "V439", "V447", "V449", "V451", "V453", "V455", "V457",
                 "V472", "V474", "V476", "V478", "V480", "V482", "V050", "V051", "V052", "V053", "V054", "V055", "V056", "V057", "V058", "V059",
@@ -8,6 +11,8 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa){
   vars.entorno <- vars(V422, V423, V425, V427, V429, V431, V433, V435, V437, V439, V447, V449, V451, V453, V455, V457, V472, V474, V476, V478, V480, V482)
   vars.dom <- vars(V001, V050, V051, V052, V053, V054, V055, V056, V057, V058, V059, V081, V082, V083, V084, V085, V086, V087)
   vars.resp.alfa <- vars(V093,V001)
+
+# bases -------------------------------------------------------------------
 
   # seleciona apenas as variÃ¡veis de interesse de cada DataFrame, assim como define uma coluna extra (Mun) que contÃ©m o cÃ³digo do municÃ­pio
   # a variÃ¡vel Cod_setor Ã© mantida em todos os DataFrames, pois ela permite encontrar cÃ³digo e nome do bairro
@@ -65,6 +70,8 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa){
 
   #entorno$Cod_setor <- as.numeric(str_replace(entorno$Cod_setor, ",","."))
 
+# join --------------------------------------------------------------------
+
   # junta todos os DataFrames pela coluna Cod_setor
   resumo <- inner_join(inner_join(inner_join(inner_join(inner_join(entorno, dom.i, by=c("Cod_setor")), dom.ii, by=c("Cod_setor")), pessoa, by=c("Cod_setor")), resp.alfa, by=c("Cod_setor")), dom.renda, by=c("Cod_setor"))
 
@@ -87,6 +94,8 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa){
 
   # calcula a proporÃ§Ã£o de pessoas vivendo nas condiÃ§Ãµes descritas pelas variÃ¡veis selecionadas
   features.abs <- selected.features
+
+# calculo componentes -----------------------------------------------------
 
   # Cria cluster por faixa de renda
   # calcula a componente Renda e aplica o peso
@@ -156,6 +165,8 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa){
   # subtraindo as componentes de banheiros e agua para nÃ£o penalizar as regiÃµes 100% estruturadas nesse quesito
   # ipc <- (compDomRenda * .5) + (compEntorno * .2) + (compDomicilios * .2) + (compPessoas * .05)
   ipc <- (compEntorno * (1/3)) + (compPessoas * (1/3)) + (compDomicilios * (1/3))
+
+# finalizacao -------------------------------------------------------------
 
   # adiciona a coluna IVC ao DataFrame que contem as informaÃ§Ãµes que permitem identificar o bairro de cada setor censitÃ¡rio
   resumoFinal <- cbind(resumo, ipc)
