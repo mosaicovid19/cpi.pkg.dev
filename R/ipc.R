@@ -7,10 +7,10 @@ source("R/VulIndex.R", encoding = "UTF-8")
 censo_dir <- file.path("~/Downloads/Censo2010")
 
 estados <- c(
-  "CE",
-  "DF",
-  "MG",
-  "RS",
+  # "CE",
+  # "DF",
+  # "MG",
+  # "RS",
   "TO"
 )
 
