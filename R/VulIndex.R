@@ -24,12 +24,12 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa){
   resp.alfa <- select(resp.alfa, c(Cod_setor, V093,V001)) %>% mutate(Mun = substr(Cod_setor, 1, 7))
 
   # Renomear campo V001 da tabela pessoa para V001p
-  pessoa$V001p <- pessoa$V001
-  pessoa <- select(pessoa,-c(V001))
+  pessoa <- pessoa %>%
+    rename(V001p = V001)
 
   # Renomear campo V001 da tabela respon.alfa para V001r
-  resp.alfa$V001r <- resp.alfa$V001
-  resp.alfa <- select(resp.alfa,-c(V001))
+  resp.alfa <- resp.alfa %>%
+    rename(V001r = V001)
 
   # define uma variÃ¡vel que assume o identificador do municÃ­pio do Rio de Janeiro
   # id.mun <- 3304557
