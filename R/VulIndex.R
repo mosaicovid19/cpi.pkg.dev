@@ -103,24 +103,8 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa){
   # calcula o componente Domicílios e aplica os pesos
   compDomicilios <- comp_domicilio(features.abs)
 
-  # calcula a componente Docmicilios com mulheres como mantenedoras e aplica os pesos
-  compDomiciliosMulher <-
-    # Qtd pessoas domicios com mulheres como mantenedoras / Qtd pessoas dos domicilios
-    (1-(rowSums(features.abs[,
-                             c("V081","V082", "V083", "V084", "V085", "V086", "V087")]))/
-       features.abs$V422) * (1/3)
-
-
-  # calcula % Pessoas brancas
-  compPessoas <-
-    (1 - rowSums(features.abs[,
-                              c("V003", "V004", "V005", "V006")])/features.abs$V001p)*1/3
-
-  # calcula % responsaveis analfa.
-  compRespAlfa <-
-    (1 - rowSums(features.abs[,c("V093")]/features.abs$V001r))*1/3
-
-  compPessoas <- compPessoas + compDomiciliosMulher + compRespAlfa
+  # calcula o componente Pessoas e aplica os pesos
+  compPessoas <- comp_pessoas(features.abs)
 
   # soma todas as componentes para formar o IVC
   # subtraindo as componentes de banheiros e agua para nÃ£o penalizar as regiÃµes 100% estruturadas nesse quesito
@@ -154,7 +138,7 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa){
   resumo.final <- cbind(resumoFinal,
                         #compDomRenda,
                         compEntorno,
-                        compDomiciliosMulher,
+                        # compDomiciliosMulher,
                         #comp5maisdomicilio,
                         #compbanheiro,
                         #compagua,
@@ -163,7 +147,7 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa){
   resumo.final <- select(resumo.final, c(Cod_UF,Cod_setor, Cod_municipio,Nome_do_municipio,
                                          Cod_bairro, Nome_do_bairro, ipc,compEntorno,
                                          # compDomRenda,
-                                         compDomiciliosMulher,
+                                         # compDomiciliosMulher,
                                          # comp5maisdomicilio,
                                          # compbanheiro,
                                          # compagua,
