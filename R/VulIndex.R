@@ -63,7 +63,15 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa){
 # join --------------------------------------------------------------------
 
   # junta todos os DataFrames pela coluna Cod_setor
-  resumo <- inner_join(inner_join(inner_join(inner_join(inner_join(entorno, dom.i, by=c("Cod_setor")), dom.ii, by=c("Cod_setor")), pessoa, by=c("Cod_setor")), resp.alfa, by=c("Cod_setor")), dom.renda, by=c("Cod_setor"))
+  resumo <- inner_join(
+    inner_join(
+      inner_join(
+        inner_join(
+          inner_join(entorno, dom.i, by=c("Cod_setor"), suffix = c("_entorno", "_dom.i")),
+          dom.ii, by=c("Cod_setor"), suffix = c("_join_dom.i", "_dom.ii")),
+        pessoa, by=c("Cod_setor"), suffix = c("_join_dom.ii", "_pessoa")),
+      resp.alfa, by=c("Cod_setor"), suffix = c("_join_pessoa", "_resp.alfa")),
+    dom.renda, by=c("Cod_setor"), suffix = c("_join_resp.alfa", "_dom.renda"))
 
   # a variÃ¡vel V002 vem do arquivo DomicilioRenda que descreve a renda total das regiÃµes definidas pelo setor censitÃ¡rio
   # ao dividir este valor total de rendas pelo nÃºmero total de pessoas (representado pela variÃ¡vel V422) obtem-se a renda per capita da regiÃ£o
@@ -71,23 +79,48 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa){
   # regiÃµes onde o Censo identificou 0 pessoas, nÃ£o servem para a anÃ¡lise, portanto tais registros devem ser removidos
   # o DataFrame selected.features contem apenas as variÃ¡veis que serÃ£o utilizadas para realizar os cÃ¡lculos
 
-  selected.features <- select(filter(resumo, V422!="0"),features)
+  # selected.features <- select(filter(resumo, V422!="0"),features)
+  resumo <- resumo %>%
+    filter(V422 != 0)
 
   # Adiciona a informaÃ§Ã£o de bairro ao DataFrame que contem todas as demais informaÃ§Ãµes coletadas pelo Censo
-  resumo <- inner_join(bairros, filter(resumo, V422!="0"), by=c("Cod_setor"))
+  resumo <- inner_join(bairros, filter(resumo, V422!="0"), by=c("Cod_setor"), suffix = c("_join5", "_bairros"))
 
   # calcula a proporÃ§Ã£o de pessoas vivendo nas condiÃ§Ãµes descritas pelas variÃ¡veis selecionadas
-  features.abs <- selected.features
+  # features.abs <- selected.features
+  features.abs <- resumo
 
 # calculo componentes -----------------------------------------------------
 
   # calcula a componente Entorno do IVC e aplica os pesos
-  compEntorno <- comp_entorno(features.abs)
+  # Requisitos:
+  # - Divide por: V422
+  # - V423, V425, V427
+  # - V429, V431, V433
+  # - V435, V437, V439
+  # - V447, V449, V451
+  # - V453, V455, V457
+  # - V472, V474, V476
+  # - V478, V480, V482
+  entorno <- entorno %>%
+    filter(V422 != 0)
+  compEntorno <- comp_entorno(entorno)
 
   # calcula o componente Domicílios e aplica os pesos
+  # Requisitos:
+  # - Divide por: V422 (entorno), V001p, V001 (??)
+  # - V055, V056, V057, V058, V059
+  # - V016
+  # - V012
+  # - V002
   compDomicilios <- comp_domicilio(features.abs)
 
   # calcula o componente Pessoas e aplica os pesos
+  # Requisitos:
+  # - Divide por: V422 (entorno), V001p, V001r
+  # - V081,V082, V083, V084, V085, V086, V087
+  # - V003, V004, V005, V006
+  # - V093
   compPessoas <- comp_pessoas(features.abs)
 
   # soma todas as componentes para formar o IVC
@@ -116,7 +149,7 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa){
   # resumo.final <- cbind(resumo, compDomRenda, compEntorno, compDomiciliosMulher, comp5maisdomicilio, compbanheiro, compagua, compPessoas)
 
   # resumoFinal$ivc <- resumoFinal$ivc + (1 - resumoFinal$hospital) * (1/14)
-  resumoFinal$ipc <- resumoFinal$ipc
+  # resumoFinal$ipc <- resumoFinal$ipc
   # resumoFinal$ivc <- resumoFinal$ipc + compUBS * 1
 
   resumo.final <- cbind(resumoFinal,
