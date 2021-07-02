@@ -134,12 +134,13 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa){
   # soma todas as componentes para formar o IVC
   # subtraindo as componentes de banheiros e agua para nÃ£o penalizar as regiÃµes 100% estruturadas nesse quesito
   # ipc <- (compDomRenda * .5) + (compEntorno * .2) + (compDomicilios * .2) + (compPessoas * .05)
-  ipc <- (compEntorno * (1/3)) + (compPessoas * (1/3)) + (compDomicilios * (1/3))
+  resumo <- resumo %>%
+    mutate(ipc = (compEntorno * (1/3)) + (compPessoas * (1/3)) + (compDomicilios * (1/3)))
 
 # finalizacao -------------------------------------------------------------
 
   # adiciona a coluna IVC ao DataFrame que contem as informaÃ§Ãµes que permitem identificar o bairro de cada setor censitÃ¡rio
-  resumo <- cbind(resumo, ipc)
+  # resumo <- cbind(resumo, ipc)
 
   # junta aos dados de UBS's, calcula a componentes da UBS, e adiciona ao IVC
   # resumoFinal <- left_join(resumoFinal, ubs, by=c("Cod_bairro"))
