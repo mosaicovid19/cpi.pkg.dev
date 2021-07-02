@@ -68,10 +68,10 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa){
       inner_join(
         inner_join(
           inner_join(entorno, dom.i, by=c("Cod_setor"), suffix = c("_entorno", "_dom.i")),
-          dom.ii, by=c("Cod_setor"), suffix = c("_join1", "_dom.ii")),
-        pessoa, by=c("Cod_setor"), suffix = c("_join2", "_pessoa")),
-      resp.alfa, by=c("Cod_setor"), suffix = c("_join3", "_resp.alfa")),
-    dom.renda, by=c("Cod_setor"), suffix = c("_join4", "_dom.renda"))
+          dom.ii, by=c("Cod_setor"), suffix = c("_join_dom.i", "_dom.ii")),
+        pessoa, by=c("Cod_setor"), suffix = c("_join_dom.ii", "_pessoa")),
+      resp.alfa, by=c("Cod_setor"), suffix = c("_join_pessoa", "_resp.alfa")),
+    dom.renda, by=c("Cod_setor"), suffix = c("_join_resp.alfa", "_dom.renda"))
 
   # a variÃ¡vel V002 vem do arquivo DomicilioRenda que descreve a renda total das regiÃµes definidas pelo setor censitÃ¡rio
   # ao dividir este valor total de rendas pelo nÃºmero total de pessoas (representado pela variÃ¡vel V422) obtem-se a renda per capita da regiÃ£o
