@@ -85,6 +85,9 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa){
   # selected.features <- select(filter(resumo, V422!="0"),features)
   resumo <- resumo %>%
     filter(V422 != 0)
+  # entorno pode ser calculado sem o join - filtrar aa parte
+  entorno <- entorno %>%
+    filter(V422 != 0)
 
   # calcula a proporÃ§Ã£o de pessoas vivendo nas condiÃ§Ãµes descritas pelas variÃ¡veis selecionadas
   # features.abs <- selected.features
@@ -102,8 +105,6 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa){
   # - V453, V455, V457
   # - V472, V474, V476
   # - V478, V480, V482
-  entorno <- entorno %>%
-    filter(V422 != 0)
   compEntorno <- comp_entorno(entorno)
 
   # calcula o componente Domicílios e aplica os pesos
