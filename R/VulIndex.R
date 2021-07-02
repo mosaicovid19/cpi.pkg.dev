@@ -139,14 +139,14 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa){
 # finalizacao -------------------------------------------------------------
 
   # adiciona a coluna IVC ao DataFrame que contem as informaÃ§Ãµes que permitem identificar o bairro de cada setor censitÃ¡rio
-  resumoFinal <- cbind(resumo, ipc)
+  resumo <- cbind(resumo, ipc)
 
   # junta aos dados de UBS's, calcula a componentes da UBS, e adiciona ao IVC
   # resumoFinal <- left_join(resumoFinal, ubs, by=c("Cod_bairro"))
 
   # alguns bairros nÃ£o tÃªm UBS, o que resulta em NA
   # substituir NA por 0
-  resumoFinal[is.na(resumoFinal)] <- 0
+  resumo[is.na(resumo)] <- 0
 
   #compUBS <- ifelse(resumoFinal$hospital >= 5,1,
   #                 ifelse(resumoFinal$hospital == 4,0.7,
@@ -160,7 +160,7 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa){
   # resumoFinal$ipc <- resumoFinal$ipc
   # resumoFinal$ivc <- resumoFinal$ipc + compUBS * 1
 
-  resumo.final <- cbind(resumoFinal,
+  resumo.final <- cbind(resumo,
                         #compDomRenda,
                         compEntorno,
                         # compDomiciliosMulher,
