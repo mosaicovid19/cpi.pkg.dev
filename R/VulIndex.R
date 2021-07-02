@@ -42,11 +42,6 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa){
   dom.renda <- select(filter(dom.renda, V001 != "X"), -Mun, -V001)
   resp.alfa <- select(filter(resp.alfa, V093 != "X"), -Mun)
 
-  # altera o tipo das variÃ¡veis do DataFrame dom.i para numÃ©rico
-  # dom.i <- dom.i %>%
-  #   mutate_at(vars(V050, V051, V052, V053, V054, V055, V056, V057, V058, V059, V081, V082, V083, V084, V085, V086, V087), function(x) as.numeric(as.character(x)))
-
-
   # cada variÃ¡vel do DataFrame dom.i se refere a nÃºmero de pessoas vivendo num determinado domicÃ­lio
   # como a idÃ©ia Ã© ter nÃºmero de pessoas por domicÃ­lio numa dada condiÃ§Ã£o, fazemos o multiplicaÃ§Ã£o do nÃºmero de domicÃ­lios pelo nÃºmero de pessoas
   # que vivem no domicÃ­lio
@@ -65,11 +60,6 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa){
   # seleciona as colunas de interesse do DataFrame bairros
   bairros <- select(basico, c(Cod_UF,Cod_setor, Cod_bairro, Nome_do_bairro,Cod_municipio,Nome_do_municipio))
 
-  # entorno <- entorno %>%
-  #   mutate_all(function(x) as.numeric(str_replace(x, ",",".")))
-
-  #entorno$Cod_setor <- as.numeric(str_replace(entorno$Cod_setor, ",","."))
-
 # join --------------------------------------------------------------------
 
   # junta todos os DataFrames pela coluna Cod_setor
@@ -77,8 +67,6 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa){
 
   # a variÃ¡vel V002 vem do arquivo DomicilioRenda que descreve a renda total das regiÃµes definidas pelo setor censitÃ¡rio
   # ao dividir este valor total de rendas pelo nÃºmero total de pessoas (representado pela variÃ¡vel V422) obtem-se a renda per capita da regiÃ£o
-  #resumo$V002 <- as.numeric(resumo$V002) / as.numeric(resumo$V422)
-  # LINHA COMENTADA POIS JÃ ESTÃ SENDO FEITO NA LINHA 105
 
   # regiÃµes onde o Censo identificou 0 pessoas, nÃ£o servem para a anÃ¡lise, portanto tais registros devem ser removidos
   # o DataFrame selected.features contem apenas as variÃ¡veis que serÃ£o utilizadas para realizar os cÃ¡lculos
@@ -87,10 +75,6 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa){
 
   # Adiciona a informaÃ§Ã£o de bairro ao DataFrame que contem todas as demais informaÃ§Ãµes coletadas pelo Censo
   resumo <- inner_join(bairros, filter(resumo, V422!="0"), by=c("Cod_setor"))
-
-  # converte todas as variÃ¡veis para o tipo numÃ©rico
-  # selected.features <- mutate_all(selected.features, function(x) as.numeric(as.character(x)))
-
 
   # calcula a proporÃ§Ã£o de pessoas vivendo nas condiÃ§Ãµes descritas pelas variÃ¡veis selecionadas
   features.abs <- selected.features
