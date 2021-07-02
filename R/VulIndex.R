@@ -74,7 +74,14 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa){
     dom.renda, by=c("Cod_setor"), suffix = c("_join_resp.alfa", "_dom.renda"))
 
   # Adiciona a informaÃ§Ã£o de bairro ao DataFrame que contem todas as demais informaÃ§Ãµes coletadas pelo Censo
-  resumo <- inner_join(bairros, filter(resumo, V422!="0"), by=c("Cod_setor"), suffix = c("_join5", "_bairros"))
+  resumo <- inner_join(bairros, filter(resumo, V422!="0"), by=c("Cod_setor"), suffix = c("_join5", "_basico"))
+  # resumo <- resumo %>%
+  #   # vars originarias de dom.renda (join5)
+  #   rename(V012 = V012_join5,
+  #          V003 = V003_join5,
+  #          V004 = V004_join5,
+  #          V005 = V005_join5,
+  #          V006 = V006_join5)
 
   # a variÃ¡vel V002 vem do arquivo DomicilioRenda que descreve a renda total das regiÃµes definidas pelo setor censitÃ¡rio
   # ao dividir este valor total de rendas pelo nÃºmero total de pessoas (representado pela variÃ¡vel V422) obtem-se a renda per capita da regiÃ£o
@@ -112,15 +119,15 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa){
   # - Divide por: V422 (entorno), V001p, V001 (??)
   # - V055, V056, V057, V058, V059
   # - V016
-  # - V012
-  # - V002
+  # - V012 (dom.renda)
+  # - V002 (dom.renda)
   compDomicilios <- comp_domicilio(features.abs)
 
   # calcula o componente Pessoas e aplica os pesos
   # Requisitos:
   # - Divide por: V422 (entorno), V001p, V001r
   # - V081,V082, V083, V084, V085, V086, V087
-  # - V003, V004, V005, V006
+  # - V003, V004, V005, V006 (dom.renda)
   # - V093
   compPessoas <- comp_pessoas(features.abs)
 
