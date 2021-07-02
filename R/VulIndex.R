@@ -138,46 +138,47 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa){
     mutate(ipc = (compEntorno * (1/3)) + (compPessoas * (1/3)) + (compDomicilios * (1/3)))
 
 # finalizacao -------------------------------------------------------------
-
-  # adiciona a coluna IVC ao DataFrame que contem as informaÃ§Ãµes que permitem identificar o bairro de cada setor censitÃ¡rio
-  # resumo <- cbind(resumo, ipc)
-
-  # junta aos dados de UBS's, calcula a componentes da UBS, e adiciona ao IVC
-  # resumoFinal <- left_join(resumoFinal, ubs, by=c("Cod_bairro"))
-
-  # alguns bairros nÃ£o tÃªm UBS, o que resulta em NA
-  # substituir NA por 0
-  resumo[is.na(resumo)] <- 0
-
-  #compUBS <- ifelse(resumoFinal$hospital >= 5,1,
-  #                 ifelse(resumoFinal$hospital == 4,0.7,
-  #                       ifelse(resumoFinal$hospital == 3,0.5,
-  #                             ifelse(resumoFinal$hospital == 2,0.3,
-  #                                   ifelse(resumoFinal$hospital == 1,0.1,0)))))
-
-  # resumo.final <- cbind(resumo, compDomRenda, compEntorno, compDomiciliosMulher, comp5maisdomicilio, compbanheiro, compagua, compPessoas)
-
-  # resumoFinal$ivc <- resumoFinal$ivc + (1 - resumoFinal$hospital) * (1/14)
-  # resumoFinal$ipc <- resumoFinal$ipc
-  # resumoFinal$ivc <- resumoFinal$ipc + compUBS * 1
-
-  resumo <- cbind(resumo,
-                        #compDomRenda,
-                        compEntorno,
-                        # compDomiciliosMulher,
-                        #comp5maisdomicilio,
-                        #compbanheiro,
-                        #compagua,
-                        compPessoas)
-
+#
+#   # adiciona a coluna IVC ao DataFrame que contem as informaÃ§Ãµes que permitem identificar o bairro de cada setor censitÃ¡rio
+#   # resumo <- cbind(resumo, ipc)
+#
+#   # junta aos dados de UBS's, calcula a componentes da UBS, e adiciona ao IVC
+#   # resumoFinal <- left_join(resumoFinal, ubs, by=c("Cod_bairro"))
+#
+#   # alguns bairros nÃ£o tÃªm UBS, o que resulta em NA
+#   # substituir NA por 0
+#   resumo[is.na(resumo)] <- 0
+#
+#   #compUBS <- ifelse(resumoFinal$hospital >= 5,1,
+#   #                 ifelse(resumoFinal$hospital == 4,0.7,
+#   #                       ifelse(resumoFinal$hospital == 3,0.5,
+#   #                             ifelse(resumoFinal$hospital == 2,0.3,
+#   #                                   ifelse(resumoFinal$hospital == 1,0.1,0)))))
+#
+#   # resumo.final <- cbind(resumo, compDomRenda, compEntorno, compDomiciliosMulher, comp5maisdomicilio, compbanheiro, compagua, compPessoas)
+#
+#   # resumoFinal$ivc <- resumoFinal$ivc + (1 - resumoFinal$hospital) * (1/14)
+#   # resumoFinal$ipc <- resumoFinal$ipc
+#   # resumoFinal$ivc <- resumoFinal$ipc + compUBS * 1
+#
+#   resumo <- cbind(resumo,
+#                         #compDomRenda,
+#                         compEntorno,
+#                         # compDomiciliosMulher,
+#                         #comp5maisdomicilio,
+#                         #compbanheiro,
+#                         #compagua,
+#                         compPessoas)
+#
   resumo <- select(resumo, c(Cod_UF,Cod_setor, Cod_municipio,Nome_do_municipio,
-                                         Cod_bairro, Nome_do_bairro, ipc,compEntorno,
-                                         # compDomRenda,
-                                         # compDomiciliosMulher,
-                                         # comp5maisdomicilio,
-                                         # compbanheiro,
-                                         # compagua,
-                                         compPessoas))
+                                         Cod_bairro, Nome_do_bairro, ipc))
+                             # ,compEntorno,
+                             #             # compDomRenda,
+                             #             # compDomiciliosMulher,
+                             #             # comp5maisdomicilio,
+                             #             # compbanheiro,
+                             #             # compagua,
+                             #             compPessoas))
 
   return(resumo)
 
