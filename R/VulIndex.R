@@ -73,6 +73,9 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa){
       resp.alfa, by=c("Cod_setor"), suffix = c("_join_pessoa", "_resp.alfa")),
     dom.renda, by=c("Cod_setor"), suffix = c("_join_resp.alfa", "_dom.renda"))
 
+  # Adiciona a informaÃ§Ã£o de bairro ao DataFrame que contem todas as demais informaÃ§Ãµes coletadas pelo Censo
+  resumo <- inner_join(bairros, filter(resumo, V422!="0"), by=c("Cod_setor"), suffix = c("_join5", "_bairros"))
+
   # a variÃ¡vel V002 vem do arquivo DomicilioRenda que descreve a renda total das regiÃµes definidas pelo setor censitÃ¡rio
   # ao dividir este valor total de rendas pelo nÃºmero total de pessoas (representado pela variÃ¡vel V422) obtem-se a renda per capita da regiÃ£o
 
@@ -82,9 +85,6 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa){
   # selected.features <- select(filter(resumo, V422!="0"),features)
   resumo <- resumo %>%
     filter(V422 != 0)
-
-  # Adiciona a informaÃ§Ã£o de bairro ao DataFrame que contem todas as demais informaÃ§Ãµes coletadas pelo Censo
-  resumo <- inner_join(bairros, filter(resumo, V422!="0"), by=c("Cod_setor"), suffix = c("_join5", "_bairros"))
 
   # calcula a proporÃ§Ã£o de pessoas vivendo nas condiÃ§Ãµes descritas pelas variÃ¡veis selecionadas
   # features.abs <- selected.features
