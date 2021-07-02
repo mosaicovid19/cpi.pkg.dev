@@ -63,7 +63,15 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa){
 # join --------------------------------------------------------------------
 
   # junta todos os DataFrames pela coluna Cod_setor
-  resumo <- inner_join(inner_join(inner_join(inner_join(inner_join(entorno, dom.i, by=c("Cod_setor")), dom.ii, by=c("Cod_setor")), pessoa, by=c("Cod_setor")), resp.alfa, by=c("Cod_setor")), dom.renda, by=c("Cod_setor"))
+  resumo <- inner_join(
+    inner_join(
+      inner_join(
+        inner_join(
+          inner_join(entorno, dom.i, by=c("Cod_setor")),
+          dom.ii, by=c("Cod_setor")),
+        pessoa, by=c("Cod_setor")),
+      resp.alfa, by=c("Cod_setor")),
+    dom.renda, by=c("Cod_setor"))
 
   # a variÃ¡vel V002 vem do arquivo DomicilioRenda que descreve a renda total das regiÃµes definidas pelo setor censitÃ¡rio
   # ao dividir este valor total de rendas pelo nÃºmero total de pessoas (representado pela variÃ¡vel V422) obtem-se a renda per capita da regiÃ£o
