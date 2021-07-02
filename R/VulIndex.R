@@ -31,6 +31,11 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa){
   resp.alfa <- resp.alfa %>%
     rename(V001r = V001)
 
+  # Renomear coluna V002 das tabelas de domicilio i e ii renda
+  # dom.i <- dom.i %>% rename(V002D1 = V002)
+  # dom.ii <- dom.ii %>% rename(V002D2 = V002)
+  dom.renda <- dom.renda %>% rename(V002DR = V002)
+
   # define uma variÃ¡vel que assume o identificador do municÃ­pio do Rio de Janeiro
   # id.mun <- 3304557
 
