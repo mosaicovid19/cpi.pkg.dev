@@ -98,7 +98,7 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa){
 
   # calcula a proporÃ§Ã£o de pessoas vivendo nas condiÃ§Ãµes descritas pelas variÃ¡veis selecionadas
   # features.abs <- selected.features
-  features.abs <- resumo
+  # features.abs <- resumo
 
 # calculo componentes -----------------------------------------------------
 
@@ -121,7 +121,7 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa){
   # - V016
   # - V012 (dom.renda)
   # - V002 (dom.renda)
-  compDomicilios <- comp_domicilio(features.abs)
+  compDomicilios <- comp_domicilio(resumo)
 
   # calcula o componente Pessoas e aplica os pesos
   # Requisitos:
@@ -129,7 +129,7 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa){
   # - V081,V082, V083, V084, V085, V086, V087
   # - V003, V004, V005, V006 (dom.renda)
   # - V093
-  compPessoas <- comp_pessoas(features.abs)
+  compPessoas <- comp_pessoas(resumo)
 
   # soma todas as componentes para formar o IVC
   # subtraindo as componentes de banheiros e agua para nÃ£o penalizar as regiÃµes 100% estruturadas nesse quesito
