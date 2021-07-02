@@ -93,14 +93,34 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa){
 # calculo componentes -----------------------------------------------------
 
   # calcula a componente Entorno do IVC e aplica os pesos
+  # Requisitos:
+  # - Divide por: V422
+  # - V423, V425, V427
+  # - V429, V431, V433
+  # - V435, V437, V439
+  # - V447, V449, V451
+  # - V453, V455, V457
+  # - V472, V474, V476
+  # - V478, V480, V482
   entorno <- entorno %>%
     filter(V422 != 0)
   compEntorno <- comp_entorno(entorno)
 
   # calcula o componente Domicílios e aplica os pesos
+  # Requisitos:
+  # - Divide por: V422 (entorno), V001p, V001 (??)
+  # - V055, V056, V057, V058, V059
+  # - V016
+  # - V012
+  # - V002
   compDomicilios <- comp_domicilio(features.abs)
 
   # calcula o componente Pessoas e aplica os pesos
+  # Requisitos:
+  # - Divide por: V422 (entorno), V001p, V001r
+  # - V081,V082, V083, V084, V085, V086, V087
+  # - V003, V004, V005, V006
+  # - V093
   compPessoas <- comp_pessoas(features.abs)
 
   # soma todas as componentes para formar o IVC
