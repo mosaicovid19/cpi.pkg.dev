@@ -71,13 +71,16 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa){
   # regiÃµes onde o Censo identificou 0 pessoas, nÃ£o servem para a anÃ¡lise, portanto tais registros devem ser removidos
   # o DataFrame selected.features contem apenas as variÃ¡veis que serÃ£o utilizadas para realizar os cÃ¡lculos
 
-  selected.features <- select(filter(resumo, V422!="0"),features)
+  # selected.features <- select(filter(resumo, V422!="0"),features)
+  resumo <- resumo %>%
+    filter(V422 != 0)
 
   # Adiciona a informaÃ§Ã£o de bairro ao DataFrame que contem todas as demais informaÃ§Ãµes coletadas pelo Censo
   resumo <- inner_join(bairros, filter(resumo, V422!="0"), by=c("Cod_setor"))
 
   # calcula a proporÃ§Ã£o de pessoas vivendo nas condiÃ§Ãµes descritas pelas variÃ¡veis selecionadas
-  features.abs <- selected.features
+  # features.abs <- selected.features
+  features.abs <- resumo
 
 # calculo componentes -----------------------------------------------------
 
@@ -116,7 +119,7 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa){
   # resumo.final <- cbind(resumo, compDomRenda, compEntorno, compDomiciliosMulher, comp5maisdomicilio, compbanheiro, compagua, compPessoas)
 
   # resumoFinal$ivc <- resumoFinal$ivc + (1 - resumoFinal$hospital) * (1/14)
-  resumoFinal$ipc <- resumoFinal$ipc
+  # resumoFinal$ipc <- resumoFinal$ipc
   # resumoFinal$ivc <- resumoFinal$ipc + compUBS * 1
 
   resumo.final <- cbind(resumoFinal,
