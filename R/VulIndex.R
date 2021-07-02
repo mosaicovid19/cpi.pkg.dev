@@ -85,7 +85,9 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa){
 # calculo componentes -----------------------------------------------------
 
   # calcula a componente Entorno do IVC e aplica os pesos
-  compEntorno <- comp_entorno(features.abs)
+  entorno <- entorno %>%
+    filter(V422 != 0)
+  compEntorno <- comp_entorno(entorno)
 
   # calcula o componente Domicílios e aplica os pesos
   compDomicilios <- comp_domicilio(features.abs)
