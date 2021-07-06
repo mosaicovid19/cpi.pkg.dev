@@ -14,6 +14,9 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa){
 
 # bases -------------------------------------------------------------------
 
+  # seleciona as colunas de interesse do DataFrame bairros
+  basico <- select(basico, c(Cod_UF,Cod_setor, Cod_bairro, Nome_do_bairro,Cod_municipio,Nome_do_municipio))
+
   # seleciona apenas as variÃ¡veis de interesse de cada DataFrame, assim como define uma coluna extra (Mun) que contÃ©m o cÃ³digo do municÃ­pio
   # a variÃ¡vel Cod_setor Ã© mantida em todos os DataFrames, pois ela permite encontrar cÃ³digo e nome do bairro
   entorno <- select(entorno, c(Cod_setor, Situacao_setor, !!!vars.entorno)) %>% mutate(Mun = substr(Cod_setor, 1, 7))
@@ -62,9 +65,6 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa){
   # descomentar caso queira verificar (compare a variÃ¡vel V001 de dom.i com a variÃ¡vel V422 do entorno)
   # dom.i$V001 <- rowSums(dom.i[, c("V050", "V051", "V052", "V053", "V054", "V055", "V056", "V057", "V058", "V059")])
 
-  # seleciona as colunas de interesse do DataFrame bairros
-  bairros <- select(basico, c(Cod_UF,Cod_setor, Cod_bairro, Nome_do_bairro,Cod_municipio,Nome_do_municipio))
-
 # join --------------------------------------------------------------------
 
   # junta todos os DataFrames pela coluna Cod_setor
@@ -79,7 +79,7 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa){
     dom.renda, by=c("Cod_setor"), suffix = c("_join_resp.alfa", "_dom.renda"))
 
   # Adiciona a informaÃ§Ã£o de bairro ao DataFrame que contem todas as demais informaÃ§Ãµes coletadas pelo Censo
-  resumo <- inner_join(bairros, filter(resumo, V422!="0"), by=c("Cod_setor"), suffix = c("_join5", "_basico"))
+  resumo <- inner_join(basico, filter(resumo, V422!="0"), by=c("Cod_setor"), suffix = c("_join5", "_basico"))
   # resumo <- resumo %>%
   #   # vars originarias de dom.renda (join5)
   #   rename(V012 = V012_join5,
