@@ -1,4 +1,12 @@
 comp_domicilio <- function(data) {
+  # Calcula % de pessoas com acesso a banheiro de uso exclusivo
+  D1BAN <-
+    rowSums(data[,c("V016")]/data$V001)
+
+  # Calcula % de pessoas com acesso a rede de distribuiÃ§Ã£o de Ã¡gua
+  D2AGU <-
+    rowSums(data[,c("V012")]/data$V001)
+
   # Calcula componente de calculo mais de duas pessoas por domicÃ­lio
   # Calcula % de pessoas que moram sÃ³s ou com atÃ© mais uma outra pessoa
   # 1 - Soma a qtde de pessoas que vivem com mais do que 5 pessoas (total)
@@ -7,14 +15,6 @@ comp_domicilio <- function(data) {
   D3M5 <-
     (1 - (rowSums(data[, c("V055", "V056", "V057", "V058", "V059")])/
             (data$V422)))
-
-  # Calcula % de pessoas com acesso a banheiro de uso exclusivo
-  D1BAN <-
-    rowSums(data[,c("V016")]/data$V001)
-
-  # Calcula % de pessoas com acesso a rede de distribuiÃ§Ã£o de Ã¡gua
-  D2AGU <-
-    rowSums(data[,c("V012")]/data$V001)
 
   # Cria cluster por faixa de renda
   # calcula a componente Renda e aplica o peso
