@@ -14,6 +14,9 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa){
 
 # bases -------------------------------------------------------------------
 
+  # seleciona as colunas de interesse do DataFrame bairros
+  basico <- select(basico, c(Cod_UF,Cod_setor, Cod_bairro, Nome_do_bairro,Cod_municipio,Nome_do_municipio))
+
   # seleciona apenas as variÃ¡veis de interesse de cada DataFrame, assim como define uma coluna extra (Mun) que contÃ©m o cÃ³digo do municÃ­pio
   # a variÃ¡vel Cod_setor Ã© mantida em todos os DataFrames, pois ela permite encontrar cÃ³digo e nome do bairro
   entorno <- select(entorno, c(Cod_setor, Situacao_setor, !!!vars.entorno)) %>% mutate(Mun = substr(Cod_setor, 1, 7))
@@ -24,12 +27,17 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa){
   resp.alfa <- select(resp.alfa, c(Cod_setor, V093,V001)) %>% mutate(Mun = substr(Cod_setor, 1, 7))
 
   # Renomear campo V001 da tabela pessoa para V001p
-  pessoa$V001p <- pessoa$V001
-  pessoa <- select(pessoa,-c(V001))
+  pessoa <- pessoa %>%
+    rename(V001p = V001)
 
   # Renomear campo V001 da tabela respon.alfa para V001r
-  resp.alfa$V001r <- resp.alfa$V001
-  resp.alfa <- select(resp.alfa,-c(V001))
+  resp.alfa <- resp.alfa %>%
+    rename(V001r = V001)
+
+  # Renomear coluna V002 das tabelas de domicilio i e ii renda
+  # dom.i <- dom.i %>% rename(V002D1 = V002)
+  # dom.ii <- dom.ii %>% rename(V002D2 = V002)
+  dom.renda <- dom.renda %>% rename(V002DR = V002)
 
   # define uma variÃ¡vel que assume o identificador do municÃ­pio do Rio de Janeiro
   # id.mun <- 3304557
@@ -41,11 +49,6 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa){
   pessoa <- select(filter(pessoa, V001p > 0 & V003 != "X"), -Mun)
   dom.renda <- select(filter(dom.renda, V001 != "X"), -Mun, -V001)
   resp.alfa <- select(filter(resp.alfa, V093 != "X"), -Mun)
-
-  # altera o tipo das variÃ¡veis do DataFrame dom.i para numÃ©rico
-  dom.i <- dom.i %>%
-    mutate_at(vars(V050, V051, V052, V053, V054, V055, V056, V057, V058, V059, V081, V082, V083, V084, V085, V086, V087), function(x) as.numeric(as.character(x)))
-
 
   # cada variÃ¡vel do DataFrame dom.i se refere a nÃºmero de pessoas vivendo num determinado domicÃ­lio
   # como a idÃ©ia Ã© ter nÃºmero de pessoas por domicÃ­lio numa dada condiÃ§Ã£o, fazemos o multiplicaÃ§Ã£o do nÃºmero de domicÃ­lios pelo nÃºmero de pessoas
@@ -62,97 +65,126 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa){
   # descomentar caso queira verificar (compare a variÃ¡vel V001 de dom.i com a variÃ¡vel V422 do entorno)
   # dom.i$V001 <- rowSums(dom.i[, c("V050", "V051", "V052", "V053", "V054", "V055", "V056", "V057", "V058", "V059")])
 
-  # seleciona as colunas de interesse do DataFrame bairros
-  bairros <- select(basico, c(Cod_UF,Cod_setor, Cod_bairro, Nome_do_bairro,Cod_municipio,Nome_do_municipio))
-
-  # entorno <- entorno %>%
-  #   mutate_all(function(x) as.numeric(str_replace(x, ",",".")))
-
-  #entorno$Cod_setor <- as.numeric(str_replace(entorno$Cod_setor, ",","."))
-
 # join --------------------------------------------------------------------
 
   # junta todos os DataFrames pela coluna Cod_setor
-  resumo <- inner_join(inner_join(inner_join(inner_join(inner_join(entorno, dom.i, by=c("Cod_setor")), dom.ii, by=c("Cod_setor")), pessoa, by=c("Cod_setor")), resp.alfa, by=c("Cod_setor")), dom.renda, by=c("Cod_setor"))
+  resumo <- inner_join(
+    inner_join(
+      inner_join(
+        inner_join(
+          inner_join(entorno, dom.i, by=c("Cod_setor"), suffix = c("_entorno", "_dom.i")),
+          dom.ii, by=c("Cod_setor"), suffix = c("_join_dom.i", "_dom.ii")),
+        pessoa, by=c("Cod_setor"), suffix = c("_join_dom.ii", "_pessoa")),
+      resp.alfa, by=c("Cod_setor"), suffix = c("_join_pessoa", "_resp.alfa")),
+    dom.renda, by=c("Cod_setor"), suffix = c("_join_resp.alfa", "_dom.renda"))
+
+  # Adiciona a informaÃ§Ã£o de bairro ao DataFrame que contem todas as demais informaÃ§Ãµes coletadas pelo Censo
+  resumo <- inner_join(basico, filter(resumo, V422!="0"), by=c("Cod_setor"), suffix = c("_join5", "_basico"))
+  # resumo <- resumo %>%
+  #   # vars originarias de dom.renda (join5)
+  #   rename(V012 = V012_join5,
+  #          V003 = V003_join5,
+  #          V004 = V004_join5,
+  #          V005 = V005_join5,
+  #          V006 = V006_join5)
 
   # a variÃ¡vel V002 vem do arquivo DomicilioRenda que descreve a renda total das regiÃµes definidas pelo setor censitÃ¡rio
   # ao dividir este valor total de rendas pelo nÃºmero total de pessoas (representado pela variÃ¡vel V422) obtem-se a renda per capita da regiÃ£o
-  #resumo$V002 <- as.numeric(resumo$V002) / as.numeric(resumo$V422)
-  # LINHA COMENTADA POIS JÃ ESTÃ SENDO FEITO NA LINHA 105
 
   # regiÃµes onde o Censo identificou 0 pessoas, nÃ£o servem para a anÃ¡lise, portanto tais registros devem ser removidos
   # o DataFrame selected.features contem apenas as variÃ¡veis que serÃ£o utilizadas para realizar os cÃ¡lculos
 
-  selected.features <- select(filter(resumo, V422!="0"),features)
-
-  # Adiciona a informaÃ§Ã£o de bairro ao DataFrame que contem todas as demais informaÃ§Ãµes coletadas pelo Censo
-  resumo <- inner_join(bairros, filter(resumo, V422!="0"), by=c("Cod_setor"))
-
-  # converte todas as variÃ¡veis para o tipo numÃ©rico
-  selected.features <- mutate_all(selected.features, function(x) as.numeric(as.character(x)))
-
+  # selected.features <- select(filter(resumo, V422!="0"),features)
+  resumo <- resumo %>%
+    filter(V422 != 0)
+  # entorno pode ser calculado sem o join - filtrar aa parte
+  entorno <- entorno %>%
+    filter(V422 != 0)
 
   # calcula a proporÃ§Ã£o de pessoas vivendo nas condiÃ§Ãµes descritas pelas variÃ¡veis selecionadas
-  features.abs <- selected.features
+  # features.abs <- selected.features
+  # features.abs <- resumo
 
 # calculo componentes -----------------------------------------------------
 
   # calcula a componente Entorno do IVC e aplica os pesos
-  compEntorno <- comp_entorno(features.abs)
+  # Requisitos:
+  # - Divide por: V422
+  # - V423, V425, V427
+  # - V429, V431, V433
+  # - V435, V437, V439
+  # - V447, V449, V451
+  # - V453, V455, V457
+  # - V472, V474, V476
+  # - V478, V480, V482
+  compEntorno <- comp_entorno(entorno)
 
   # calcula o componente Domicílios e aplica os pesos
-  compDomicilios <- comp_domicilio(features.abs)
+  # Requisitos:
+  # - Divide por: V422 (entorno), V001p, V001 (??)
+  # - V055, V056, V057, V058, V059
+  # - V016
+  # - V012 (dom.renda)
+  # - V002 (dom.renda)
+  compDomicilios <- comp_domicilio(resumo)
 
   # calcula o componente Pessoas e aplica os pesos
-  compPessoas <- comp_pessoas(features.abs)
+  # Requisitos:
+  # - Divide por: V422 (entorno), V001p, V001r
+  # - V081,V082, V083, V084, V085, V086, V087
+  # - V003, V004, V005, V006 (dom.renda)
+  # - V093
+  compPessoas <- comp_pessoas(resumo)
 
   # soma todas as componentes para formar o IVC
   # subtraindo as componentes de banheiros e agua para nÃ£o penalizar as regiÃµes 100% estruturadas nesse quesito
   # ipc <- (compDomRenda * .5) + (compEntorno * .2) + (compDomicilios * .2) + (compPessoas * .05)
-  ipc <- (compEntorno * (1/3)) + (compPessoas * (1/3)) + (compDomicilios * (1/3))
+  resumo <- resumo %>%
+    mutate(ipc = (compEntorno * (1/3)) + (compPessoas * (1/3)) + (compDomicilios * (1/3)))
 
 # finalizacao -------------------------------------------------------------
+#
+#   # adiciona a coluna IVC ao DataFrame que contem as informaÃ§Ãµes que permitem identificar o bairro de cada setor censitÃ¡rio
+#   # resumo <- cbind(resumo, ipc)
+#
+#   # junta aos dados de UBS's, calcula a componentes da UBS, e adiciona ao IVC
+#   # resumoFinal <- left_join(resumoFinal, ubs, by=c("Cod_bairro"))
+#
+#   # alguns bairros nÃ£o tÃªm UBS, o que resulta em NA
+#   # substituir NA por 0
+#   resumo[is.na(resumo)] <- 0
+#
+#   #compUBS <- ifelse(resumoFinal$hospital >= 5,1,
+#   #                 ifelse(resumoFinal$hospital == 4,0.7,
+#   #                       ifelse(resumoFinal$hospital == 3,0.5,
+#   #                             ifelse(resumoFinal$hospital == 2,0.3,
+#   #                                   ifelse(resumoFinal$hospital == 1,0.1,0)))))
+#
+#   # resumo.final <- cbind(resumo, compDomRenda, compEntorno, compDomiciliosMulher, comp5maisdomicilio, compbanheiro, compagua, compPessoas)
+#
+#   # resumoFinal$ivc <- resumoFinal$ivc + (1 - resumoFinal$hospital) * (1/14)
+#   # resumoFinal$ipc <- resumoFinal$ipc
+#   # resumoFinal$ivc <- resumoFinal$ipc + compUBS * 1
+#
+#   resumo <- cbind(resumo,
+#                         #compDomRenda,
+#                         compEntorno,
+#                         # compDomiciliosMulher,
+#                         #comp5maisdomicilio,
+#                         #compbanheiro,
+#                         #compagua,
+#                         compPessoas)
+#
+  resumo <- select(resumo, c(Cod_UF,Cod_setor, Cod_municipio,Nome_do_municipio,
+                                         Cod_bairro, Nome_do_bairro, ipc))
+                             # ,compEntorno,
+                             #             # compDomRenda,
+                             #             # compDomiciliosMulher,
+                             #             # comp5maisdomicilio,
+                             #             # compbanheiro,
+                             #             # compagua,
+                             #             compPessoas))
 
-  # adiciona a coluna IVC ao DataFrame que contem as informaÃ§Ãµes que permitem identificar o bairro de cada setor censitÃ¡rio
-  resumoFinal <- cbind(resumo, ipc)
-
-  # junta aos dados de UBS's, calcula a componentes da UBS, e adiciona ao IVC
-  # resumoFinal <- left_join(resumoFinal, ubs, by=c("Cod_bairro"))
-
-  # alguns bairros nÃ£o tÃªm UBS, o que resulta em NA
-  # substituir NA por 0
-  resumoFinal[is.na(resumoFinal)] <- 0
-
-  #compUBS <- ifelse(resumoFinal$hospital >= 5,1,
-  #                 ifelse(resumoFinal$hospital == 4,0.7,
-  #                       ifelse(resumoFinal$hospital == 3,0.5,
-  #                             ifelse(resumoFinal$hospital == 2,0.3,
-  #                                   ifelse(resumoFinal$hospital == 1,0.1,0)))))
-
-  # resumo.final <- cbind(resumo, compDomRenda, compEntorno, compDomiciliosMulher, comp5maisdomicilio, compbanheiro, compagua, compPessoas)
-
-  # resumoFinal$ivc <- resumoFinal$ivc + (1 - resumoFinal$hospital) * (1/14)
-  resumoFinal$ipc <- resumoFinal$ipc
-  # resumoFinal$ivc <- resumoFinal$ipc + compUBS * 1
-
-  resumo.final <- cbind(resumoFinal,
-                        #compDomRenda,
-                        compEntorno,
-                        # compDomiciliosMulher,
-                        #comp5maisdomicilio,
-                        #compbanheiro,
-                        #compagua,
-                        compPessoas)
-
-  resumo.final <- select(resumo.final, c(Cod_UF,Cod_setor, Cod_municipio,Nome_do_municipio,
-                                         Cod_bairro, Nome_do_bairro, ipc,compEntorno,
-                                         # compDomRenda,
-                                         # compDomiciliosMulher,
-                                         # comp5maisdomicilio,
-                                         # compbanheiro,
-                                         # compagua,
-                                         compPessoas))
-
-  return(resumo.final)
+  return(resumo)
 
 }
