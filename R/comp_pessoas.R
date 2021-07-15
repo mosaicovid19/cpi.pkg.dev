@@ -4,10 +4,7 @@ comp_pessoas <- function(data) {
 
   H2MR <- H2MR(data)
 
-  # calcula % responsaveis analfa.
-  # base Responsavel02
-  H3RA <-
-    (1 - rowSums(data[,c("V093")]/data$V001r))
+  H3RA <- H3RA(data)
 
   compPessoas <-
     H1NB * 1/3 +
