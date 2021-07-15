@@ -3,9 +3,7 @@ comp_entorno <- function(data) {
 
   E1LOG <- E1LOG(data)
 
-    #Iluminação Pública
-  # base Entorno03
-  E2ILU <- rowSums(data[, c("V429", "V431", "V433")])/data$V422
+  E2ILU <- E2ILU(data)
 
     #Pavimentação
   # base Entorno03
