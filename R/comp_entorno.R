@@ -9,9 +9,7 @@ comp_entorno <- function(data) {
 
   E4MEI <- E4MEI(data)
 
-    #Bueiro/Boca de lobo
-  # base Entorno03
-  E5BOC <- rowSums(data[, c("V453", "V455", "V457")])/data$V422
+  E5BOC <- E5BOC(data)
 
     #Esgoto
   # base Entorno03
