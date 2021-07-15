@@ -11,9 +11,7 @@ comp_entorno <- function(data) {
 
   E5BOC <- E5BOC(data)
 
-    #Esgoto
-  # base Entorno03
-  E6ESG <- rowSums(data[, c("V472", "V474", "V476")])/data$V422
+  E6ESG <- E6ESG(data)
 
     #Lixo
   # base Entorno03
