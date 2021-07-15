@@ -13,9 +13,7 @@ comp_entorno <- function(data) {
 
   E6ESG <- E6ESG(data)
 
-    #Lixo
-  # base Entorno03
-  E7LIX <- rowSums(data[, c("V478", "V480", "V482")])/data$V422
+  E7LIX <- E7LIX(data)
 
   componente <-
     E1LOG * 1/7 +
