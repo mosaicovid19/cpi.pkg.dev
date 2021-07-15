@@ -1,10 +1,7 @@
 comp_domicilio <- function(data) {
   D1BAN <- D1BAN(data)
 
-  # Calcula % de pessoas com acesso a rede de distribuiÃ§Ã£o de Ã¡gua
-  # base Domicilio02
-  D2AGU <-
-    rowSums(data[,c("V012")]/data$V001)
+  D2AGU <- D2AGU(data)
 
   # Calcula componente de calculo mais de duas pessoas por domicÃ­lio
   # Calcula % de pessoas que moram sÃ³s ou com atÃ© mais uma outra pessoa
