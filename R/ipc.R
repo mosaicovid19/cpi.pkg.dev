@@ -1,8 +1,6 @@
 library(tidyverse)
 library(censo2010brasil)
 
-source("R/VulIndex.R", encoding = "UTF-8")
-
 ipc_f <- VulIndex(
   basico = Basico,
   entorno = Entorno03,
