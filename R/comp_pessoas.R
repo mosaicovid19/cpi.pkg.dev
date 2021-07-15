@@ -1,9 +1,6 @@
 comp_pessoas <- function(data) {
 
-  # calcula % Pessoas brancas
-  # base Pessoa03
-  H1NB <-
-    (1 - rowSums(data[, c("V003", "V004", "V005", "V006")])/data$V001p)
+  H1NB <- H1NB(data)
 
   # calcula a componente Docmicilios com mulheres como mantenedoras e aplica os pesos
   # base Domicilio01
