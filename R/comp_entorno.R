@@ -7,9 +7,7 @@ comp_entorno <- function(data) {
 
   E3PAV <- E3PAV(data)
 
-    #Meio-fio/guia
-  # base Entorno03
-  E4MEI <- rowSums(data[, c("V447", "V449", "V451")])/data$V422
+  E4MEI <- E4MEI(data)
 
     #Bueiro/Boca de lobo
   # base Entorno03
