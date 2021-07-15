@@ -3,16 +3,7 @@ comp_domicilio <- function(data) {
 
   D2AGU <- D2AGU(data)
 
-  # Calcula componente de calculo mais de duas pessoas por domicÃ­lio
-  # Calcula % de pessoas que moram sÃ³s ou com atÃ© mais uma outra pessoa
-  # 1 - Soma a qtde de pessoas que vivem com mais do que 5 pessoas (total)
-  # 2 - Subtrai de 1, a qtde de pessoas que vivem com mais do que 2 pessoas em residÃªncias sustentadas por mulheres
-  # 3 - Divide o resultado de 2 pelo nÃºmero total de pessoas vivendo com mais do que 2 pessoas
-  # base Domicilio02
-
-  D3M5 <-
-    (1 - (rowSums(data[, c("V055", "V056", "V057", "V058", "V059")])/
-            (data$V422)))
+  D3M5 <- D3M5(data)
 
   # Cria cluster por faixa de renda
   # calcula a componente Renda e aplica o peso
