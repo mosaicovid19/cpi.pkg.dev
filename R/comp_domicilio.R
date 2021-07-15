@@ -1,8 +1,5 @@
 comp_domicilio <- function(data) {
-  # Calcula % de pessoas com acesso a banheiro de uso exclusivo
-  # base Domicilio02
-  D1BAN <-
-    rowSums(data[,c("V016")]/data$V001)
+  D1BAN <- D1BAN(data)
 
   # Calcula % de pessoas com acesso a rede de distribuiÃ§Ã£o de Ã¡gua
   # base Domicilio02
