@@ -1,33 +1,19 @@
 comp_entorno <- function(data) {
   # calcula a componente Entorno do IVC e aplica os pesos
 
-    #Logradouro
-  # base Entorno03
-  E1LOG <- rowSums(data[, c("V423", "V425", "V427")])/data$V422
+  E1LOG <- E1LOG(data)
 
-    #Iluminação Pública
-  # base Entorno03
-  E2ILU <- rowSums(data[, c("V429", "V431", "V433")])/data$V422
+  E2ILU <- E2ILU(data)
 
-    #Pavimentação
-  # base Entorno03
-  E3PAV <- rowSums(data[, c("V435", "V437", "V439")])/data$V422
+  E3PAV <- E3PAV(data)
 
-    #Meio-fio/guia
-  # base Entorno03
-  E4MEI <- rowSums(data[, c("V447", "V449", "V451")])/data$V422
+  E4MEI <- E4MEI(data)
 
-    #Bueiro/Boca de lobo
-  # base Entorno03
-  E5BOC <- rowSums(data[, c("V453", "V455", "V457")])/data$V422
+  E5BOC <- E5BOC(data)
 
-    #Esgoto
-  # base Entorno03
-  E6ESG <- rowSums(data[, c("V472", "V474", "V476")])/data$V422
+  E6ESG <- E6ESG(data)
 
-    #Lixo
-  # base Entorno03
-  E7LIX <- rowSums(data[, c("V478", "V480", "V482")])/data$V422
+  E7LIX <- E7LIX(data)
 
   componente <-
     E1LOG * 1/7 +
