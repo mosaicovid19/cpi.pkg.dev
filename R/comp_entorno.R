@@ -1,9 +1,7 @@
 comp_entorno <- function(data) {
   # calcula a componente Entorno do IVC e aplica os pesos
 
-    #Logradouro
-  # base Entorno03
-  E1LOG <- rowSums(data[, c("V423", "V425", "V427")])/data$V422
+  E1LOG <- E1LOG(data)
 
     #Iluminação Pública
   # base Entorno03
