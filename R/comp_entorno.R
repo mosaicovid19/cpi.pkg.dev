@@ -5,9 +5,7 @@ comp_entorno <- function(data) {
 
   E2ILU <- E2ILU(data)
 
-    #Pavimentação
-  # base Entorno03
-  E3PAV <- rowSums(data[, c("V435", "V437", "V439")])/data$V422
+  E3PAV <- E3PAV(data)
 
     #Meio-fio/guia
   # base Entorno03
