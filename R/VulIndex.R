@@ -15,16 +15,33 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa, grou
 # bases -------------------------------------------------------------------
 
   # seleciona as colunas de interesse do DataFrame bairros
-  basico <- select(basico, c(Cod_UF,Cod_setor, Cod_bairro, Nome_do_bairro,Cod_municipio,Nome_do_municipio))
+  # basico <- select(basico, c(Cod_UF,Cod_setor, Cod_bairro, Nome_do_bairro,Cod_municipio,Nome_do_municipio))
 
   # seleciona apenas as variÃ¡veis de interesse de cada DataFrame, assim como define uma coluna extra (Mun) que contÃ©m o cÃ³digo do municÃ­pio
   # a variÃ¡vel Cod_setor Ã© mantida em todos os DataFrames, pois ela permite encontrar cÃ³digo e nome do bairro
-  entorno <- select(entorno, c(Cod_setor, Situacao_setor, !!!vars.entorno)) %>% mutate(Mun = substr(Cod_setor, 1, 7))
-  dom.i <- select(dom.i, c(Cod_setor, !!!vars.dom)) %>% mutate(Mun = substr(Cod_setor, 1, 7))
-  dom.ii <- select(dom.ii, c(Cod_setor, V001, V012, V016)) %>% mutate(Mun = substr(Cod_setor, 1, 7))
-  pessoa <- select(pessoa, c(Cod_setor, V001, V003, V004, V005, V006)) %>% mutate(Mun = substr(Cod_setor, 1, 7))
-  dom.renda <- select(dom.renda, c(Cod_setor, V001, V002)) %>% mutate(Mun = substr(Cod_setor, 1, 7))
-  resp.alfa <- select(resp.alfa, c(Cod_setor, V093,V001)) %>% mutate(Mun = substr(Cod_setor, 1, 7))
+  # entorno <- select(entorno, c(Cod_setor, Situacao_setor, !!!vars.entorno)) %>% mutate(Mun = substr(Cod_setor, 1, 7))
+  # dom.i <- select(dom.i, c(Cod_setor, !!!vars.dom)) %>% mutate(Mun = substr(Cod_setor, 1, 7))
+  # dom.ii <- select(dom.ii, c(Cod_setor, V001, V012, V016)) %>% mutate(Mun = substr(Cod_setor, 1, 7))
+  # pessoa <- select(pessoa, c(Cod_setor, V001, V003, V004, V005, V006)) %>% mutate(Mun = substr(Cod_setor, 1, 7))
+  # dom.renda <- select(dom.renda, c(Cod_setor, V001, V002)) %>% mutate(Mun = substr(Cod_setor, 1, 7))
+  # resp.alfa <- select(resp.alfa, c(Cod_setor, V093,V001)) %>% mutate(Mun = substr(Cod_setor, 1, 7))
+
+  # seleciona apenas as variáveis de interesse de cada DataFrame
+  basico <- basico %>%
+    select({{group}}, starts_with(c("Cod_", "Nome_")))
+
+  entorno <- entorno %>%
+    select(Cod_setor, Situacao_setor, !!!vars.entorno)
+  dom.i <- dom.i %>%
+    select(Cod_setor, !!!vars.dom)
+  dom.ii <- dom.ii %>%
+    select(Cod_setor, V001, V012, V016)
+  pessoa <- pessoa %>%
+    select(Cod_setor, V001, V003, V004, V005, V006)
+  dom.renda <- dom.renda %>%
+    select(Cod_setor, V001, V002)
+  resp.alfa <- resp.alfa %>%
+    select(Cod_setor, V001, V093)
 
   # Renomear campo V001 da tabela pessoa para V001p
   pessoa <- pessoa %>%
@@ -35,20 +52,34 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa, grou
     rename(V001r = V001)
 
   # Renomear coluna V002 das tabelas de domicilio i e ii renda
-  # dom.i <- dom.i %>% rename(V002D1 = V002)
-  # dom.ii <- dom.ii %>% rename(V002D2 = V002)
-  dom.renda <- dom.renda %>% rename(V002DR = V002)
+  # dom.i <- dom.i %>%
+  #   rename(V002D1 = V002)
+  # dom.ii <- dom.ii %>%
+  #   rename(V002D2 = V002)
+  dom.renda <- dom.renda %>%
+    rename(V002DR = V002)
 
   # define uma variÃ¡vel que assume o identificador do municÃ­pio do Rio de Janeiro
   # id.mun <- 3304557
 
   # exclui a coluna Mun, pois ela jÃ¡ nÃ£o Ã© mais necessÃ¡ria, e remove as linhas com valores indesejados
-  entorno <- select(filter(entorno, V423 != "X" ), -Mun)
-  dom.i <- select(filter(dom.i, V001 > 0 & V052 != "X"), -Mun, -V001)
-  dom.ii <- select(filter(dom.ii, V001 > 0 & V012 != "X" ), -Mun)
-  pessoa <- select(filter(pessoa, V001p > 0 & V003 != "X"), -Mun)
-  dom.renda <- select(filter(dom.renda, V001 != "X"), -Mun, -V001)
-  resp.alfa <- select(filter(resp.alfa, V093 != "X"), -Mun)
+  # entorno <- select(filter(entorno, V423 != "X" ), -Mun)
+  # dom.i <- select(filter(dom.i, V001 > 0 & V052 != "X"), -Mun, -V001)
+  # dom.ii <- select(filter(dom.ii, V001 > 0 & V012 != "X" ), -Mun)
+  # pessoa <- select(filter(pessoa, V001p > 0 & V003 != "X"), -Mun)
+  # dom.renda <- select(filter(dom.renda, V001 != "X"), -Mun, -V001)
+  # resp.alfa <- select(filter(resp.alfa, V093 != "X"), -Mun)
+
+  # remove as linhas com valores indesejados
+  dom.i <- dom.i %>%
+    filter(V001 >0) %>%
+    select(-V001)
+  dom.ii <- dom.ii %>%
+    filter(V001 >0)
+  pessoa <- pessoa %>%
+    filter(V001p >0)
+  dom.renda <- dom.renda %>%
+    select(-V001)
 
   # cada variÃ¡vel do DataFrame dom.i se refere a nÃºmero de pessoas vivendo num determinado domicÃ­lio
   # como a idÃ©ia Ã© ter nÃºmero de pessoas por domicÃ­lio numa dada condiÃ§Ã£o, fazemos o multiplicaÃ§Ã£o do nÃºmero de domicÃ­lios pelo nÃºmero de pessoas
