@@ -1,4 +1,4 @@
-VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa, group = Cod_setor){
+VulIndex = function(basico = Basico, entorno = Entorno03, dom.i = Domicilio01, dom.ii = Domicilio02, pessoa = Pessoa03, dom.renda = DomicilioRenda, resp.alfa = Responsavel02, group = Cod_setor){
 
 # vars --------------------------------------------------------------------
 
