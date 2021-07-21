@@ -49,13 +49,13 @@ VulIndex = function(basico = Basico, entorno = Entorno03, dom.i = Domicilio01, d
 
   # remove as linhas com valores indesejados
   dom.i <- dom.i %>%
-    filter(V001 >0) %>%
+    filter(V001 >0) %>% # n = 0
     # descartar V001
     select(-V001)
   dom.ii <- dom.ii %>%
-    filter(V001 >0)
+    filter(V001 >0) # n = 0
   pessoa <- pessoa %>%
-    filter(V001p >0)
+    filter(V001p >0) # n = 0
 
   # variáveis do dataframe dom.i refletem o número de pessoas vivendo num determinado domicílio
   dom.i <- dom.i %>%
