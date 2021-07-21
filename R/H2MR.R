@@ -1,9 +1,19 @@
-H2MR <- function(data) {
+H2MR <- function(data, group = Cod_setor) {
 
   # calcula a componente Docmicilios com mulheres como mantenedoras e aplica os pesos
   # base Domicilio01
 
   # Qtd pessoas domicios com mulheres como mantenedoras / Qtd pessoas dos domicilios
-  (1-(rowSums(data[, c("V081","V082", "V083", "V084", "V085", "V086", "V087")]))/
-     data$V422)
+  data %>%
+    group_by( {{group}} ) %>%
+    mutate(H2MR = 1 - (
+      sum(V081, na.rm = TRUE) +
+      sum(V082, na.rm = TRUE) +
+      sum(V083, na.rm = TRUE) +
+      sum(V084, na.rm = TRUE) +
+      sum(V085, na.rm = TRUE) +
+      sum(V086, na.rm = TRUE) +
+      sum(V087, na.rm = TRUE)
+    ) / sum(V422, na.rm = TRUE)) %>%
+    pull(H2MR)
 }
