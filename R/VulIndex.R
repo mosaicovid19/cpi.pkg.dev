@@ -84,14 +84,32 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa, grou
   # cada variÃ¡vel do DataFrame dom.i se refere a nÃºmero de pessoas vivendo num determinado domicÃ­lio
   # como a idÃ©ia Ã© ter nÃºmero de pessoas por domicÃ­lio numa dada condiÃ§Ã£o, fazemos o multiplicaÃ§Ã£o do nÃºmero de domicÃ­lios pelo nÃºmero de pessoas
   # que vivem no domicÃ­lio
-  dom.i$V051 <- dom.i$V051 * 2; dom.i$V052 <- dom.i$V052 * 3; dom.i$V053 <- dom.i$V053 * 4; dom.i$V054 <- dom.i$V054 * 5; dom.i$V055 <- dom.i$V055 * 6;
-  dom.i$V056 <- dom.i$V056 * 7; dom.i$V057 <- dom.i$V057 * 8; dom.i$V058 <- dom.i$V058 * 9; dom.i$V059 <- dom.i$V059 * 10;
+  # dom.i$V051 <- dom.i$V051 * 2; dom.i$V052 <- dom.i$V052 * 3; dom.i$V053 <- dom.i$V053 * 4; dom.i$V054 <- dom.i$V054 * 5; dom.i$V055 <- dom.i$V055 * 6;
+  # dom.i$V056 <- dom.i$V056 * 7; dom.i$V057 <- dom.i$V057 * 8; dom.i$V058 <- dom.i$V058 * 9; dom.i$V059 <- dom.i$V059 * 10;
 
   # similar ao que foi feita nas duas linhas acima, sÃ³ que este cÃ¡lculo Ã© para definir quantas pessoas vivem em domicÃ­lios que tem mulheres
   # como mantenedoras
-  dom.i$V081 <- dom.i$V081 * 2; dom.i$V082 <- dom.i$V082 * 3; dom.i$V083 <- dom.i$V083 * 4; dom.i$V084 <- dom.i$V084 * 5;
-  dom.i$V085 <- dom.i$V085 * 6; dom.i$V086 <- dom.i$V086 * 7;
+  # dom.i$V081 <- dom.i$V081 * 2; dom.i$V082 <- dom.i$V082 * 3; dom.i$V083 <- dom.i$V083 * 4; dom.i$V084 <- dom.i$V084 * 5;
+  # dom.i$V085 <- dom.i$V085 * 6; dom.i$V086 <- dom.i$V086 * 7;
 
+  dom.i %>%
+    mutate(
+      V051 = V051*2,
+      V052 = V052*3,
+      V053 = V053*4,
+      V054 = V054*5,
+      V055 = V055*6,
+      V056 = V056*7,
+      V057 = V057*8,
+      V058 = V058*9,
+      V059 = V059*10,
+      V081 = V081*2,
+      V082 = V082*3,
+      V083 = V083*4,
+      V084 = V084*5,
+      V085 = V085*6,
+      V086 = V086*7,
+    )
   # a linha comentada abaixo sÃ³ foi utilizada para verificar se os cÃ¡lculos nas 4 linhas acima faziam sentido
   # descomentar caso queira verificar (compare a variÃ¡vel V001 de dom.i com a variÃ¡vel V422 do entorno)
   # dom.i$V001 <- rowSums(dom.i[, c("V050", "V051", "V052", "V053", "V054", "V055", "V056", "V057", "V058", "V059")])
