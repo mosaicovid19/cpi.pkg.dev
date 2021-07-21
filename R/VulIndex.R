@@ -1,4 +1,4 @@
-VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa){
+VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa, group = Cod_setor){
 
 # vars --------------------------------------------------------------------
 
@@ -117,7 +117,7 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa){
   # - V453, V455, V457
   # - V472, V474, V476
   # - V478, V480, V482
-  compEntorno <- comp_entorno(entorno)
+  compEntorno <- comp_entorno(entorno, group = {{group}})
 
   # calcula o componente Domicílios e aplica os pesos
   # Requisitos:
@@ -126,7 +126,7 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa){
   # - V016
   # - V012 (dom.renda)
   # - V002 (dom.renda)
-  compDomicilios <- comp_domicilio(resumo)
+  compDomicilios <- comp_domicilio(resumo, group = {{group}})
 
   # calcula o componente Pessoas e aplica os pesos
   # Requisitos:
@@ -134,7 +134,7 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa){
   # - V081,V082, V083, V084, V085, V086, V087
   # - V003, V004, V005, V006 (dom.renda)
   # - V093
-  compPessoas <- comp_pessoas(resumo)
+  compPessoas <- comp_pessoas(resumo, group = {{group}})
 
   # soma todas as componentes para formar o IVC
   # subtraindo as componentes de banheiros e agua para nÃ£o penalizar as regiÃµes 100% estruturadas nesse quesito

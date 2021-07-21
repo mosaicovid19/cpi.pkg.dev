@@ -1,19 +1,19 @@
-comp_entorno <- function(data) {
+comp_entorno <- function(data, group = Cod_setor) {
   # calcula a componente Entorno do IVC e aplica os pesos
 
-  E1LOG <- E1LOG(data)
+  E1LOG <- E1LOG(data, group = {{group}})
 
-  E2ILU <- E2ILU(data)
+  E2ILU <- E2ILU(data, group = {{group}})
 
-  E3PAV <- E3PAV(data)
+  E3PAV <- E3PAV(data, group = {{group}})
 
-  E4MEI <- E4MEI(data)
+  E4MEI <- E4MEI(data, group = {{group}})
 
-  E5BOC <- E5BOC(data)
+  E5BOC <- E5BOC(data, group = {{group}})
 
-  E6ESG <- E6ESG(data)
+  E6ESG <- E6ESG(data, group = {{group}})
 
-  E7LIX <- E7LIX(data)
+  E7LIX <- E7LIX(data, group = {{group}})
 
   componente <-
     E1LOG * 1/7 +

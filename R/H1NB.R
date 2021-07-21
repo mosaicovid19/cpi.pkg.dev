@@ -1,6 +1,14 @@
-H1NB <- function(data) {
+H1NB <- function(data, group = Cod_setor) {
 
   # calcula % Pessoas brancas
   # base Pessoa03
-  (1 - rowSums(data[, c("V003", "V004", "V005", "V006")])/data$V001p)
+  data %>%
+    group_by( {{group}} ) %>%
+    mutate(H1NB = 1 - (
+      sum(V003, na.rm = TRUE) +
+      sum(V004, na.rm = TRUE) +
+      sum(V005, na.rm = TRUE) +
+      sum(V006, na.rm = TRUE)
+    ) / sum(V001p, na.rm = TRUE)) %>%
+    pull(H1NB)
 }
