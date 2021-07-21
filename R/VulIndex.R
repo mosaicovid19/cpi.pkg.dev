@@ -27,8 +27,13 @@ VulIndex = function(basico = Basico, entorno = Entorno03, dom.i = Domicilio01, d
     select(-V001)
 
   dom.ii <- dom.ii %>%
-    # esta V001 será descartada
-    select(Cod_setor, V001, V012, V016)
+    # esta V001 será mantida
+    select(Cod_setor, V001, V012, V016) %>%
+    # renomear V002
+    #   rename(V002D2 = V002) %>%
+    # filtrar valores indesejados
+    filter(V001 >0) # n = 0
+
   pessoa <- pessoa %>%
     # esta V001 será renomeada para V001p
     select(Cod_setor, V001, V003, V004, V005, V006)
@@ -49,14 +54,10 @@ VulIndex = function(basico = Basico, entorno = Entorno03, dom.i = Domicilio01, d
 
   # Renomear coluna V002 das tabelas de domicilio i e ii renda
 
-  # dom.ii <- dom.ii %>%
-  #   rename(V002D2 = V002)
   dom.renda <- dom.renda %>%
     rename(V002DR = V002)
 
   # remove as linhas com valores indesejados
-  dom.ii <- dom.ii %>%
-    filter(V001 >0) # n = 0
   pessoa <- pessoa %>%
     filter(V001p >0) # n = 0
 
