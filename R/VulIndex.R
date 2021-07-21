@@ -36,7 +36,10 @@ VulIndex = function(basico = Basico, entorno = Entorno03, dom.i = Domicilio01, d
 
   pessoa <- pessoa %>%
     # esta V001 será renomeada para V001p
-    select(Cod_setor, V001, V003, V004, V005, V006)
+    select(Cod_setor, V001, V003, V004, V005, V006) %>%
+    # Renomear campo V001 da tabela pessoa para V001p
+    rename(V001p = V001)
+
   dom.renda <- dom.renda %>%
     # esta V002 será renomeada para V002DR
     select(Cod_setor, V002)
@@ -44,9 +47,6 @@ VulIndex = function(basico = Basico, entorno = Entorno03, dom.i = Domicilio01, d
     # esta V001 será renomeada para V001r
     select(Cod_setor, V001, V093)
 
-  # Renomear campo V001 da tabela pessoa para V001p
-  pessoa <- pessoa %>%
-    rename(V001p = V001)
 
   # Renomear campo V001 da tabela respon.alfa para V001r
   resp.alfa <- resp.alfa %>%
