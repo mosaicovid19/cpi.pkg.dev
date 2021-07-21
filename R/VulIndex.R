@@ -224,7 +224,7 @@ VulIndex = function(basico,entorno,dom.i,dom.ii,pessoa,dom.renda,resp.alfa, grou
 #                         #compagua,
 #                         compPessoas)
 #
-  resumo <- select(resumo, c(Cod_UF,Cod_setor, Cod_municipio,Nome_do_municipio,
+  resumo <- select(resumo, c({{group}}, Cod_UF, Cod_setor, Cod_municipio, Nome_do_municipio,
                                          Cod_bairro, Nome_do_bairro, ipc))
                              # ,compEntorno,
                              #             # compDomRenda,
