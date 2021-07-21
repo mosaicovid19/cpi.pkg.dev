@@ -1,6 +1,13 @@
-E6ESG <- function(data) {
+E6ESG <- function(data, group = Cod_setor) {
 
   #Esgoto
   # base Entorno03
-  rowSums(data[, c("V472", "V474", "V476")])/data$V422
+  data %>%
+    group_by( {{group}} ) %>%
+    mutate(E6ESG = (
+      sum(V472, na.rm = TRUE) +
+      sum(V474, na.rm = TRUE) +
+      sum(V476, na.rm = TRUE)
+    ) / sum(V422, na.rm = TRUE)) %>%
+    pull(E6ESG)
 }
