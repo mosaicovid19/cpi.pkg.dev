@@ -7,14 +7,17 @@ D3M5 <- function(data, group = Cod_setor) {
   # 3 - Divide o resultado de 2 pelo número total de pessoas vivendo com mais do que 2 pessoas
   # base Domicilio02
 
-  data %>%
-    group_by( {{group}} ) %>%
-    mutate(D3M5 = 1 - (
-      sum(V055, na.rm = TRUE) +
-      sum(V056, na.rm = TRUE) +
-      sum(V057, na.rm = TRUE) +
-      sum(V058, na.rm = TRUE) +
-      sum(V059, na.rm = TRUE)
-      ) / sum(V422, na.rm = TRUE)) %>%
-    pull(D3M5)
+  1 - (rowSums(data[, c("V055", "V056", "V057", "V058", "V059")])/
+         (data$V422))
+
+  # data %>%
+  #   group_by( {{group}} ) %>%
+  #   mutate(D3M5 = 1 - (
+  #     sum(V055, na.rm = TRUE) +
+  #     sum(V056, na.rm = TRUE) +
+  #     sum(V057, na.rm = TRUE) +
+  #     sum(V058, na.rm = TRUE) +
+  #     sum(V059, na.rm = TRUE)
+  #     ) / sum(V422, na.rm = TRUE)) %>%
+  #   pull(D3M5)
 }
