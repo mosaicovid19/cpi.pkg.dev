@@ -16,14 +16,20 @@ VulIndex = function(basico = Basico, entorno = Entorno03, dom.i = Domicilio01, d
   entorno <- entorno %>%
     select(Cod_setor, Situacao_setor, !!!vars.entorno)
   dom.i <- dom.i %>%
+    # contém V001
     select(Cod_setor, !!!vars.dom)
   dom.ii <- dom.ii %>%
+    # esta V001 será descartada
     select(Cod_setor, V001, V012, V016)
   pessoa <- pessoa %>%
+    # esta V001 será renomeada para V001p
     select(Cod_setor, V001, V003, V004, V005, V006)
   dom.renda <- dom.renda %>%
+    # esta V001 será descartada
+    # esta V002 será renomeada para V002DR
     select(Cod_setor, V001, V002)
   resp.alfa <- resp.alfa %>%
+    # esta V001 será renomeada para V001r
     select(Cod_setor, V001, V093)
 
   # Renomear campo V001 da tabela pessoa para V001p
@@ -45,12 +51,14 @@ VulIndex = function(basico = Basico, entorno = Entorno03, dom.i = Domicilio01, d
   # remove as linhas com valores indesejados
   dom.i <- dom.i %>%
     filter(V001 >0) %>%
+    # descartar V001
     select(-V001)
   dom.ii <- dom.ii %>%
     filter(V001 >0)
   pessoa <- pessoa %>%
     filter(V001p >0)
   dom.renda <- dom.renda %>%
+    # descartar V001
     select(-V001)
 
   # variáveis do dataframe dom.i refletem o número de pessoas vivendo num determinado domicílio
