@@ -50,11 +50,8 @@ VulIndex = function(basico = Basico, entorno = Entorno03, dom.i = Domicilio01, d
 
   resp.alfa <- resp.alfa %>%
     # esta V001 será renomeada para V001r
-    select(Cod_setor, V001, V093)
-
-
-  # Renomear campo V001 da tabela respon.alfa para V001r
-  resp.alfa <- resp.alfa %>%
+    select(Cod_setor, V001, V093) %>%
+    # Renomear campo V001 da tabela respon.alfa para V001r
     rename(V001r = V001)
 
   # variáveis do dataframe dom.i refletem o número de pessoas vivendo num determinado domicílio
