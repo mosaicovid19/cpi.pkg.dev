@@ -25,9 +25,8 @@ VulIndex = function(basico = Basico, entorno = Entorno03, dom.i = Domicilio01, d
     # esta V001 será renomeada para V001p
     select(Cod_setor, V001, V003, V004, V005, V006)
   dom.renda <- dom.renda %>%
-    # esta V001 será descartada
     # esta V002 será renomeada para V002DR
-    select(Cod_setor, V001, V002)
+    select(Cod_setor, V002)
   resp.alfa <- resp.alfa %>%
     # esta V001 será renomeada para V001r
     select(Cod_setor, V001, V093)
@@ -57,9 +56,6 @@ VulIndex = function(basico = Basico, entorno = Entorno03, dom.i = Domicilio01, d
     filter(V001 >0)
   pessoa <- pessoa %>%
     filter(V001p >0)
-  dom.renda <- dom.renda %>%
-    # descartar V001
-    select(-V001)
 
   # variáveis do dataframe dom.i refletem o número de pessoas vivendo num determinado domicílio
   dom.i <- dom.i %>%
