@@ -19,8 +19,6 @@ VulIndex = function(basico = Basico, entorno = Entorno03, dom.i = Domicilio01, d
   dom.i <- dom.i %>%
     # V001 recebida de vars.dom, será filtrada e descartada
     select(Cod_setor, !!!vars.dom) %>%
-    # renomear V002
-    #   rename(V002D1 = V002) %>%
     # filtrar valores indesejados
     filter(V001 >0) %>% # n = 0
     # descartar V001
@@ -29,8 +27,6 @@ VulIndex = function(basico = Basico, entorno = Entorno03, dom.i = Domicilio01, d
   dom.ii <- dom.ii %>%
     # esta V001 será mantida
     select(Cod_setor, V001, V012, V016) %>%
-    # renomear V002
-    #   rename(V002D2 = V002) %>%
     # filtrar valores indesejados
     filter(V001 >0) # n = 0
 
