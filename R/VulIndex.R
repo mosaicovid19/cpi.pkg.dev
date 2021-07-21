@@ -92,7 +92,7 @@ VulIndex = function(basico = Basico, entorno = Entorno03, dom.i = Domicilio01, d
   # dom.i$V081 <- dom.i$V081 * 2; dom.i$V082 <- dom.i$V082 * 3; dom.i$V083 <- dom.i$V083 * 4; dom.i$V084 <- dom.i$V084 * 5;
   # dom.i$V085 <- dom.i$V085 * 6; dom.i$V086 <- dom.i$V086 * 7;
 
-  dom.i %>%
+  dom.i <- dom.i %>%
     mutate(
       V051 = V051*2,
       V052 = V052*3,
