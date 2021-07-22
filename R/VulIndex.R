@@ -15,7 +15,9 @@ VulIndex = function(basico = Basico, entorno = Entorno03, dom.i = Domicilio01, d
     select({{group}}, Cod_setor, Situacao_setor, starts_with(c("Cod_", "Nome_")))
 
   entorno <- entorno %>%
-    select(Cod_setor, !!!vars.entorno)
+    select(Cod_setor, !!!vars.entorno) %>%
+    # filtrar valores indesejados
+    filter(V422 != 0)
 
   dom.i <- dom.i %>%
     # V001 será filtrada e descartada
@@ -106,13 +108,6 @@ VulIndex = function(basico = Basico, entorno = Entorno03, dom.i = Domicilio01, d
 
   # regiÃµes onde o Censo identificou 0 pessoas, nÃ£o servem para a anÃ¡lise, portanto tais registros devem ser removidos
   # o DataFrame selected.features contem apenas as variÃ¡veis que serÃ£o utilizadas para realizar os cÃ¡lculos
-
-  # selected.features <- select(filter(resumo, V422!="0"),features)
-  resumo <- resumo %>%
-    filter(V422 != 0)
-  # entorno pode ser calculado sem o join - filtrar aa parte
-  entorno <- entorno %>%
-    filter(V422 != 0)
 
   # calcula a proporÃ§Ã£o de pessoas vivendo nas condiÃ§Ãµes descritas pelas variÃ¡veis selecionadas
   # features.abs <- selected.features
