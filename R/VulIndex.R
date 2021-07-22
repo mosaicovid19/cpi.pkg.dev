@@ -158,15 +158,24 @@ VulIndex = function(basico = Basico, entorno = Entorno03, dom.i = Domicilio01, d
 
 # finalizacao -------------------------------------------------------------
 
-  select(c({{group}}, Cod_UF, Cod_setor, Cod_municipio, Nome_do_municipio,
-                                         Cod_bairro, Nome_do_bairro, ipc))
-                             # ,compEntorno,
-                             #             # compDomRenda,
-                             #             # compDomiciliosMulher,
-                             #             # comp5maisdomicilio,
-                             #             # compbanheiro,
-                             #             # compagua,
-                             #             compPessoas))
-
+  count(ipc,
+        compEntorno,
+        compDomicilios,
+        compPessoas,
+        E1LOG,
+        E2ILU,
+        E3PAV,
+        E4MEI,
+        E5BOC,
+        E6ESG,
+        E7LIX,
+        D1BAN,
+        D2AGU,
+        D3M5,
+        D4REN,
+        H1NB,
+        H2MR,
+        H3RA,
+  )
 
 }
