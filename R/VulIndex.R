@@ -11,10 +11,10 @@ VulIndex = function(basico = Basico, entorno = Entorno03, dom.i = Domicilio01, d
 
   # seleciona apenas as variáveis de interesse de cada DataFrame
   basico <- basico %>%
-    select({{group}}, starts_with(c("Cod_", "Nome_")))
+    select({{group}}, Cod_setor, Situacao_setor, starts_with(c("Cod_", "Nome_")))
 
   entorno <- entorno %>%
-    select(Cod_setor, Situacao_setor, !!!vars.entorno)
+    select(Cod_setor, !!!vars.entorno)
 
   dom.i <- dom.i %>%
     # V001 recebida de vars.dom, será filtrada e descartada
