@@ -1,5 +1,6 @@
 library(tidyverse)
 library(censo2010brasil)
+library(cpi.pkg.dev)
 
 # checkout c3133b6 e calcular a resposta
 # source("R/VulIndex.R", encoding = "UTF-8")
@@ -12,7 +13,7 @@ resposta <- resposta %>%
   arrange(Cod_setor)
 
 # checkout develop branch
-devtools::load_all(".")
+# devtools::load_all(".")
 teste <- VulIndex(group = Cod_setor) %>%
   select(Cod_setor, ipc) %>%
   arrange(Cod_setor)
