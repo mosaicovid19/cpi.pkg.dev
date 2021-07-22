@@ -176,6 +176,7 @@ VulIndex = function(basico = Basico, entorno = Entorno03, dom.i = Domicilio01, d
         H1NB,
         H2MR,
         H3RA,
-  )
+  ) %>%
+    ungroup()
 
 }
