@@ -1,5 +1,5 @@
 comp_domicilio <- function(data, group = Cod_setor) {
-  base %>%
+  data %>%
     # acrescenta variável D1BAN
     D1BAN(group = {{group}}) %>%
     # acrescenta variável D2AGU
