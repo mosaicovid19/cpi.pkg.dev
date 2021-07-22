@@ -4,6 +4,5 @@ H3RA <- function(data, group = Cod_setor) {
   # base Responsavel02
   data %>%
     group_by( {{group}} ) %>%
-    mutate(H3RA = 1 - sum(V093, na.rm = TRUE) / sum(V001r, na.rm = TRUE)) %>%
-    pull(H3RA)
+    mutate(H3RA = 1 - sum(V093, na.rm = TRUE) / sum(V001r, na.rm = TRUE))
 }

@@ -115,6 +115,9 @@ VulIndex = function(basico = Basico, entorno = Entorno03, dom.i = Domicilio01, d
 
 # calculo componentes -----------------------------------------------------
 
+  # acrescenta todas as variáveis e componentes em novas colunas
+  resumo %>%
+
   # calcula a componente Entorno do IVC e aplica os pesos
   # Requisitos:
   # - Divide por: V422
@@ -125,7 +128,7 @@ VulIndex = function(basico = Basico, entorno = Entorno03, dom.i = Domicilio01, d
   # - V453, V455, V457
   # - V472, V474, V476
   # - V478, V480, V482
-  compEntorno <- comp_entorno(entorno, group = {{group}})
+  comp_entorno( group = {{group}} ) %>%
 
   # calcula o componente Domicílios e aplica os pesos
   # Requisitos:
@@ -134,7 +137,7 @@ VulIndex = function(basico = Basico, entorno = Entorno03, dom.i = Domicilio01, d
   # - V016
   # - V012 (dom.renda)
   # - V002 (dom.renda)
-  compDomicilios <- comp_domicilio(resumo, group = {{group}})
+  comp_domicilio( group = {{group}} ) %>%
 
   # calcula o componente Pessoas e aplica os pesos
   # Requisitos:
@@ -142,26 +145,37 @@ VulIndex = function(basico = Basico, entorno = Entorno03, dom.i = Domicilio01, d
   # - V081,V082, V083, V084, V085, V086, V087
   # - V003, V004, V005, V006 (dom.renda)
   # - V093
-  compPessoas <- comp_pessoas(resumo, group = {{group}})
+  comp_pessoas( group = {{group}} ) %>%
 
   # soma todas as componentes para formar o IVC
   # subtraindo as componentes de banheiros e agua para nÃ£o penalizar as regiÃµes 100% estruturadas nesse quesito
   # ipc <- (compDomRenda * .5) + (compEntorno * .2) + (compDomicilios * .2) + (compPessoas * .05)
-  resumo <- resumo %>%
-    mutate(ipc = (compEntorno * (1/3)) + (compPessoas * (1/3)) + (compDomicilios * (1/3)))
+    mutate(ipc =
+             compEntorno    * (1/3) +
+             compPessoas    * (1/3) +
+             compDomicilios * (1/3)
+    ) %>%
 
 # finalizacao -------------------------------------------------------------
 
-  resumo <- select(resumo, c({{group}}, Cod_UF, Cod_setor, Cod_municipio, Nome_do_municipio,
-                                         Cod_bairro, Nome_do_bairro, ipc))
-                             # ,compEntorno,
-                             #             # compDomRenda,
-                             #             # compDomiciliosMulher,
-                             #             # comp5maisdomicilio,
-                             #             # compbanheiro,
-                             #             # compagua,
-                             #             compPessoas))
-
-  return(resumo)
+  count(ipc,
+        compEntorno,
+        compDomicilios,
+        compPessoas,
+        E1LOG,
+        E2ILU,
+        E3PAV,
+        E4MEI,
+        E5BOC,
+        E6ESG,
+        E7LIX,
+        D1BAN,
+        D2AGU,
+        D3M5,
+        D4REN,
+        H1NB,
+        H2MR,
+        H3RA,
+  )
 
 }

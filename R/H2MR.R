@@ -1,7 +1,7 @@
 H2MR <- function(data, group = Cod_setor) {
 
-  # calcula a componente Docmicilios com mulheres como mantenedoras e aplica os pesos
-  # base Domicilio01
+  # calcula a variável Docmicilios com mulheres como mantenedoras
+  # base Domicilio01 + Entorno03
 
   # Qtd pessoas domicios com mulheres como mantenedoras / Qtd pessoas dos domicilios
   data %>%
@@ -14,6 +14,5 @@ H2MR <- function(data, group = Cod_setor) {
       sum(V085, na.rm = TRUE) +
       sum(V086, na.rm = TRUE) +
       sum(V087, na.rm = TRUE)
-    ) / sum(V422, na.rm = TRUE)) %>%
-    pull(H2MR)
+    ) / sum(V422, na.rm = TRUE))
 }
