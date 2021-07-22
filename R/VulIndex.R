@@ -1,6 +1,6 @@
 VulIndex = function(basico = Basico, entorno = Entorno03, dom.i = Domicilio01, dom.ii = Domicilio02, pessoa = Pessoa03, dom.renda = DomicilioRenda, resp.alfa = Responsavel02, group = Cod_setor){
 
-# vars --------------------------------------------------------------------
+# bases -------------------------------------------------------------------
 
   # definição de vars para auxílio ao select
   vars.entorno <- vars(V422, V423, V425, V427, V429, V431, V433, V435, V437, V439, V447, V449, V451, V453, V455, V457, V472, V474, V476, V478, V480, V482)
@@ -9,8 +9,6 @@ VulIndex = function(basico = Basico, entorno = Entorno03, dom.i = Domicilio01, d
   vars.dom.renda <- vars(V002)
   vars.pessoa <- vars(V001, V003, V004, V005, V006)
   vars.resp.alfa <- vars(V001, V093)
-
-# bases -------------------------------------------------------------------
 
   # seleciona apenas as variáveis de interesse de cada DataFrame
   basico <- basico %>%
