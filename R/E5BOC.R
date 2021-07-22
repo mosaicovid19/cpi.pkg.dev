@@ -8,6 +8,5 @@ E5BOC <- function(data, group = Cod_setor) {
       sum(V453, na.rm = TRUE) +
       sum(V455, na.rm = TRUE) +
       sum(V457, na.rm = TRUE)
-    ) / sum(V422, na.rm = TRUE)) %>%
-    pull(E5BOC)
+    ) / sum(V422, na.rm = TRUE))
 }

@@ -8,6 +8,5 @@ E6ESG <- function(data, group = Cod_setor) {
       sum(V472, na.rm = TRUE) +
       sum(V474, na.rm = TRUE) +
       sum(V476, na.rm = TRUE)
-    ) / sum(V422, na.rm = TRUE)) %>%
-    pull(E6ESG)
+    ) / sum(V422, na.rm = TRUE))
 }

@@ -8,6 +8,5 @@ E2ILU <- function(data, group = Cod_setor) {
       sum(V429, na.rm = TRUE) +
       sum(V431, na.rm = TRUE) +
       sum(V433, na.rm = TRUE)
-    ) / sum(V422, na.rm = TRUE)) %>%
-    pull(E2ILU)
+    ) / sum(V422, na.rm = TRUE))
 }
