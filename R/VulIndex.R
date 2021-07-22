@@ -15,13 +15,13 @@ VulIndex = function(basico = Basico, entorno = Entorno03, dom.i = Domicilio01, d
     select({{group}}, Cod_setor, Situacao_setor, starts_with(c("Cod_", "Nome_")))
 
   entorno <- entorno %>%
-    select(Cod_setor, !!!vars.entorno) %>%
+    base_redux(vars.entorno) %>%
     # filtrar valores indesejados
     filter(V422 != 0)
 
   dom.i <- dom.i %>%
     # V001 será filtrada e descartada
-    select(Cod_setor, !!!vars.dom.i) %>%
+    base_redux(vars.dom.i) %>%
     # filtrar valores indesejados
     filter(V001 >0) %>% # n = 0
     # descartar V001
@@ -29,13 +29,13 @@ VulIndex = function(basico = Basico, entorno = Entorno03, dom.i = Domicilio01, d
 
   dom.ii <- dom.ii %>%
     # V001 será mantida
-    select(Cod_setor, !!!vars.dom.ii) %>%
+    base_redux(vars.dom.ii) %>%
     # filtrar valores indesejados
     filter(V001 >0) # n = 0
 
   pessoa <- pessoa %>%
     # V001 será renomeada (V001p)
-    select(Cod_setor, !!!vars.pessoa) %>%
+    base_redux(vars.pessoa) %>%
     # Renomear campo V001 da tabela pessoa para V001p
     rename(V001p = V001) %>%
     # filtrar valores indesejados
@@ -43,13 +43,13 @@ VulIndex = function(basico = Basico, entorno = Entorno03, dom.i = Domicilio01, d
 
   dom.renda <- dom.renda %>%
     # V002 será renomeada (V002DR)
-    select(Cod_setor, !!!vars.dom.renda) %>%
+    base_redux(vars.dom.renda) %>%
     # renomear V002
     rename(V002DR = V002)
 
   resp.alfa <- resp.alfa %>%
     # V001 será renomeada (V001r)
-    select(Cod_setor, !!!vars.resp.alfa) %>%
+    base_redux(vars.resp.alfa) %>%
     # Renomear campo V001 da tabela resp.alfa para V001r
     rename(V001r = V001)
 
