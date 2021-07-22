@@ -9,6 +9,5 @@ E1LOG <- function(data, group = Cod_setor) {
       sum(V423, na.rm = TRUE) +
       sum(V425, na.rm = TRUE) +
       sum(V427, na.rm = TRUE)
-    ) / sum(V422, na.rm = TRUE)) %>%
-    pull(E1LOG)
+    ) / sum(V422, na.rm = TRUE))
 }

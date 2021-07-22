@@ -2,7 +2,7 @@ D4REN <- function(data, group = Cod_setor) {
 
   # Cria cluster por faixa de renda
   # calcula a componente Renda e aplica o peso
-  # base DomicilioRenda
+  # base DomicilioRenda + Pessoa03
   data %>%
     group_by( {{group}} ) %>%
     mutate(D4REN = case_when(
@@ -12,6 +12,5 @@ D4REN <- function(data, group = Cod_setor) {
       sum(V002DR)/sum(V001p) >  178   ~ 0.3,
       sum(V002DR)/sum(V001p) >   89   ~ 0.2,
       TRUE                            ~ 0.1
-    )) %>%
-    pull(D4REN)
+    ))
 }
