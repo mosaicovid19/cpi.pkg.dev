@@ -4,6 +4,5 @@ D2AGU <- function(data, group = Cod_setor) {
   # base Domicilio02
   data %>%
     group_by( {{group}} ) %>%
-    mutate(D2AGU = sum(V012, na.rm = TRUE) / sum(V001, na.rm = TRUE)) %>%
-    pull(D2AGU)
+    mutate(D2AGU = sum(V012, na.rm = TRUE) / sum(V001, na.rm = TRUE))
 }
