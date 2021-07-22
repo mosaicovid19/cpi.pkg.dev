@@ -5,6 +5,7 @@ VulIndex = function(basico = Basico, entorno = Entorno03, dom.i = Domicilio01, d
   # definição de vars para auxílio ao select
   vars.entorno <- vars(V422, V423, V425, V427, V429, V431, V433, V435, V437, V439, V447, V449, V451, V453, V455, V457, V472, V474, V476, V478, V480, V482)
   vars.dom.i <- vars(V001, V050, V051, V052, V053, V054, V055, V056, V057, V058, V059, V081, V082, V083, V084, V085, V086, V087)
+  vars.dom.ii <- vars(V001, V012, V016)
   vars.resp.alfa <- vars(V001, V093)
 
 # bases -------------------------------------------------------------------
@@ -26,7 +27,7 @@ VulIndex = function(basico = Basico, entorno = Entorno03, dom.i = Domicilio01, d
 
   dom.ii <- dom.ii %>%
     # esta V001 será mantida
-    select(Cod_setor, V001, V012, V016) %>%
+    select(Cod_setor, !!!vars.dom.ii) %>%
     # filtrar valores indesejados
     filter(V001 >0) # n = 0
 
