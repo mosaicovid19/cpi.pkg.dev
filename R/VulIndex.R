@@ -128,7 +128,7 @@ VulIndex = function(basico = Basico, entorno = Entorno03, dom.i = Domicilio01, d
   # - V453, V455, V457
   # - V472, V474, V476
   # - V478, V480, V482
-  comp_entorno(group = {{group}}) %>%
+  comp_entorno( group = {{group}} ) %>%
 
   # calcula o componente Domicílios e aplica os pesos
   # Requisitos:
@@ -137,7 +137,7 @@ VulIndex = function(basico = Basico, entorno = Entorno03, dom.i = Domicilio01, d
   # - V016
   # - V012 (dom.renda)
   # - V002 (dom.renda)
-    comp_domicilio(group = {{group}}) %>%
+  comp_domicilio( group = {{group}} ) %>%
 
   # calcula o componente Pessoas e aplica os pesos
   # Requisitos:
@@ -145,16 +145,20 @@ VulIndex = function(basico = Basico, entorno = Entorno03, dom.i = Domicilio01, d
   # - V081,V082, V083, V084, V085, V086, V087
   # - V003, V004, V005, V006 (dom.renda)
   # - V093
-    comp_pessoas(group = {{group}}) %>%
+  comp_pessoas( group = {{group}} ) %>%
 
   # soma todas as componentes para formar o IVC
   # subtraindo as componentes de banheiros e agua para nÃ£o penalizar as regiÃµes 100% estruturadas nesse quesito
   # ipc <- (compDomRenda * .5) + (compEntorno * .2) + (compDomicilios * .2) + (compPessoas * .05)
-    mutate(ipc = compEntorno * (1/3) + compPessoas * (1/3) + compDomicilios * (1/3))
+    mutate(ipc =
+             compEntorno    * (1/3) +
+             compPessoas    * (1/3) +
+             compDomicilios * (1/3)
+    ) %>%
 
 # finalizacao -------------------------------------------------------------
 
-  resumo <- select(resumo, c({{group}}, Cod_UF, Cod_setor, Cod_municipio, Nome_do_municipio,
+  select(c({{group}}, Cod_UF, Cod_setor, Cod_municipio, Nome_do_municipio,
                                          Cod_bairro, Nome_do_bairro, ipc))
                              # ,compEntorno,
                              #             # compDomRenda,
@@ -164,6 +168,5 @@ VulIndex = function(basico = Basico, entorno = Entorno03, dom.i = Domicilio01, d
                              #             # compagua,
                              #             compPessoas))
 
-  return(resumo)
 
 }
