@@ -5,7 +5,10 @@ VulIndex = function(basico = Basico, entorno = Entorno03, dom.i = Domicilio01, d
   # definição de vars para auxílio ao select
   vars.entorno <- vars(V422, V423, V425, V427, V429, V431, V433, V435, V437, V439, V447, V449, V451, V453, V455, V457, V472, V474, V476, V478, V480, V482)
   vars.dom.i <- vars(V001, V050, V051, V052, V053, V054, V055, V056, V057, V058, V059, V081, V082, V083, V084, V085, V086, V087)
-  vars.resp.alfa <- vars(V093,V001)
+  vars.dom.ii <- vars(V001, V012, V016)
+  vars.dom.renda <- vars(V002)
+  vars.pessoa <- vars(V001, V003, V004, V005, V006)
+  vars.resp.alfa <- vars(V001, V093)
 
 # bases -------------------------------------------------------------------
 
@@ -17,7 +20,7 @@ VulIndex = function(basico = Basico, entorno = Entorno03, dom.i = Domicilio01, d
     select(Cod_setor, !!!vars.entorno)
 
   dom.i <- dom.i %>%
-    # V001 recebida de vars.dom, será filtrada e descartada
+    # V001 será filtrada e descartada
     select(Cod_setor, !!!vars.dom.i) %>%
     # filtrar valores indesejados
     filter(V001 >0) %>% # n = 0
@@ -25,29 +28,29 @@ VulIndex = function(basico = Basico, entorno = Entorno03, dom.i = Domicilio01, d
     select(-V001)
 
   dom.ii <- dom.ii %>%
-    # esta V001 será mantida
-    select(Cod_setor, V001, V012, V016) %>%
+    # V001 será mantida
+    select(Cod_setor, !!!vars.dom.ii) %>%
     # filtrar valores indesejados
     filter(V001 >0) # n = 0
 
   pessoa <- pessoa %>%
-    # esta V001 será renomeada para V001p
-    select(Cod_setor, V001, V003, V004, V005, V006) %>%
+    # V001 será renomeada (V001p)
+    select(Cod_setor, !!!vars.pessoa) %>%
     # Renomear campo V001 da tabela pessoa para V001p
     rename(V001p = V001) %>%
     # filtrar valores indesejados
     filter(V001p >0) # n = 0
 
   dom.renda <- dom.renda %>%
-    # esta V002 será renomeada para V002DR
-    select(Cod_setor, V002) %>%
+    # V002 será renomeada (V002DR)
+    select(Cod_setor, !!!vars.dom.renda) %>%
     # renomear V002
     rename(V002DR = V002)
 
   resp.alfa <- resp.alfa %>%
-    # esta V001 será renomeada para V001r
-    select(Cod_setor, V001, V093) %>%
-    # Renomear campo V001 da tabela respon.alfa para V001r
+    # V001 será renomeada (V001r)
+    select(Cod_setor, !!!vars.resp.alfa) %>%
+    # Renomear campo V001 da tabela resp.alfa para V001r
     rename(V001r = V001)
 
   # variáveis do dataframe dom.i refletem o número de pessoas vivendo num determinado domicílio
