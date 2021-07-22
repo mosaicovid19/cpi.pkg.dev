@@ -7,6 +7,7 @@ VulIndex = function(basico = Basico, entorno = Entorno03, dom.i = Domicilio01, d
   vars.dom.i <- vars(V001, V050, V051, V052, V053, V054, V055, V056, V057, V058, V059, V081, V082, V083, V084, V085, V086, V087)
   vars.dom.ii <- vars(V001, V012, V016)
   vars.dom.renda <- vars(V002)
+  vars.pessoa <- vars(V001, V003, V004, V005, V006)
   vars.resp.alfa <- vars(V001, V093)
 
 # bases -------------------------------------------------------------------
@@ -34,7 +35,7 @@ VulIndex = function(basico = Basico, entorno = Entorno03, dom.i = Domicilio01, d
 
   pessoa <- pessoa %>%
     # esta V001 será renomeada para V001p
-    select(Cod_setor, V001, V003, V004, V005, V006) %>%
+    select(Cod_setor, !!!vars.pessoa) %>%
     # Renomear campo V001 da tabela pessoa para V001p
     rename(V001p = V001) %>%
     # filtrar valores indesejados
