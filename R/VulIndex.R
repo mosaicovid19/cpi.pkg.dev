@@ -1,10 +1,10 @@
-VulIndex = function(Basico = Basico, Entorno03 = Entorno03, dom.i = Domicilio01, Domicilio02 = Domicilio02, pessoa = Pessoa03, dom.renda = DomicilioRenda, resp.alfa = Responsavel02, group = Cod_setor){
+VulIndex = function(Basico = Basico, Entorno03 = Entorno03, Domicilio01 = Domicilio01, Domicilio02 = Domicilio02, pessoa = Pessoa03, dom.renda = DomicilioRenda, resp.alfa = Responsavel02, group = Cod_setor){
 
 # bases -------------------------------------------------------------------
 
   # definição de vars para auxílio ao select
   vars.Entorno03 <- vars(V422, V423, V425, V427, V429, V431, V433, V435, V437, V439, V447, V449, V451, V453, V455, V457, V472, V474, V476, V478, V480, V482)
-  vars.dom.i <- vars(V001, V050, V051, V052, V053, V054, V055, V056, V057, V058, V059, V081, V082, V083, V084, V085, V086, V087)
+  vars.Domicilio01 <- vars(V001, V050, V051, V052, V053, V054, V055, V056, V057, V058, V059, V081, V082, V083, V084, V085, V086, V087)
   vars.Domicilio02 <- vars(V001, V012, V016)
   vars.dom.renda <- vars(V002)
   vars.pessoa <- vars(V001, V003, V004, V005, V006)
@@ -19,9 +19,9 @@ VulIndex = function(Basico = Basico, Entorno03 = Entorno03, dom.i = Domicilio01,
     # filtrar valores indesejados
     filter(V422 != 0) # n = 640
 
-  dom.i <- dom.i %>%
+  Domicilio01 <- Domicilio01 %>%
     # V001 será filtrada e descartada
-    base_redux(vars.dom.i) %>%
+    base_redux(vars.Domicilio01) %>%
     # filtrar valores indesejados
     filter(V001 >0) %>% # n = 0
     # descartar V001
@@ -53,8 +53,8 @@ VulIndex = function(Basico = Basico, Entorno03 = Entorno03, dom.i = Domicilio01,
     # Renomear campo V001 da tabela resp.alfa para V001r
     rename(V001r = V001)
 
-  # variáveis do dataframe dom.i refletem o número de pessoas vivendo num determinado domicílio
-  dom.i <- dom.i %>%
+  # variáveis do dataframe Domicilio01 refletem o número de pessoas vivendo num determinado domicílio
+  Domicilio01 <- Domicilio01 %>%
     mutate(
       # como a ideia é ter número de pessoas por domicílio numa dada condição, multiplicamos o número de domicílios pelo número de pessoas
       # que vivem no domicílio
@@ -87,8 +87,8 @@ VulIndex = function(Basico = Basico, Entorno03 = Entorno03, dom.i = Domicilio01,
     inner_join(
       inner_join(
         inner_join(
-          inner_join(Entorno03, dom.i, by=c("Cod_setor"), suffix = c("_entorno", "_dom.i")),
-          Domicilio02, by=c("Cod_setor"), suffix = c("_join_dom.i", "_dom02")),
+          inner_join(Entorno03, Domicilio01, by=c("Cod_setor"), suffix = c("_entorno", "_dom01")),
+          Domicilio02, by=c("Cod_setor"), suffix = c("_join_dom01", "_dom02")),
         pessoa, by=c("Cod_setor"), suffix = c("_join_dom02", "_pessoa")),
       resp.alfa, by=c("Cod_setor"), suffix = c("_join_pessoa", "_resp.alfa")),
     dom.renda, by=c("Cod_setor"), suffix = c("_join_resp.alfa", "_dom.renda"))
