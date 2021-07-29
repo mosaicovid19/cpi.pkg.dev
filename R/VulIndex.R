@@ -1,11 +1,11 @@
-VulIndex = function(Basico = Basico, Entorno03 = Entorno03, dom.i = Domicilio01, dom.ii = Domicilio02, pessoa = Pessoa03, dom.renda = DomicilioRenda, resp.alfa = Responsavel02, group = Cod_setor){
+VulIndex = function(Basico = Basico, Entorno03 = Entorno03, dom.i = Domicilio01, Domicilio02 = Domicilio02, pessoa = Pessoa03, dom.renda = DomicilioRenda, resp.alfa = Responsavel02, group = Cod_setor){
 
 # bases -------------------------------------------------------------------
 
   # definição de vars para auxílio ao select
   vars.Entorno03 <- vars(V422, V423, V425, V427, V429, V431, V433, V435, V437, V439, V447, V449, V451, V453, V455, V457, V472, V474, V476, V478, V480, V482)
   vars.dom.i <- vars(V001, V050, V051, V052, V053, V054, V055, V056, V057, V058, V059, V081, V082, V083, V084, V085, V086, V087)
-  vars.dom.ii <- vars(V001, V012, V016)
+  vars.Domicilio02 <- vars(V001, V012, V016)
   vars.dom.renda <- vars(V002)
   vars.pessoa <- vars(V001, V003, V004, V005, V006)
   vars.resp.alfa <- vars(V001, V093)
@@ -27,9 +27,9 @@ VulIndex = function(Basico = Basico, Entorno03 = Entorno03, dom.i = Domicilio01,
     # descartar V001
     select(-V001)
 
-  dom.ii <- dom.ii %>%
+  Domicilio02 <- Domicilio02 %>%
     # V001 será mantida
-    base_redux(vars.dom.ii) %>%
+    base_redux(vars.Domicilio02) %>%
     # filtrar valores indesejados
     filter(V001 >0) # n = 0
 
@@ -88,8 +88,8 @@ VulIndex = function(Basico = Basico, Entorno03 = Entorno03, dom.i = Domicilio01,
       inner_join(
         inner_join(
           inner_join(Entorno03, dom.i, by=c("Cod_setor"), suffix = c("_entorno", "_dom.i")),
-          dom.ii, by=c("Cod_setor"), suffix = c("_join_dom.i", "_dom.ii")),
-        pessoa, by=c("Cod_setor"), suffix = c("_join_dom.ii", "_pessoa")),
+          Domicilio02, by=c("Cod_setor"), suffix = c("_join_dom.i", "_dom02")),
+        pessoa, by=c("Cod_setor"), suffix = c("_join_dom02", "_pessoa")),
       resp.alfa, by=c("Cod_setor"), suffix = c("_join_pessoa", "_resp.alfa")),
     dom.renda, by=c("Cod_setor"), suffix = c("_join_resp.alfa", "_dom.renda"))
 
@@ -132,7 +132,7 @@ VulIndex = function(Basico = Basico, Entorno03 = Entorno03, dom.i = Domicilio01,
 
   # calcula o componente Domicílios e aplica os pesos
   # Requisitos:
-  # - Divide por: V422 (Entorno03), V001p, V001 (??)
+  # - Divide por: V422 (Entorno03), V001p, V001 (Domicilio02)
   # - V055, V056, V057, V058, V059
   # - V016
   # - V012 (dom.renda)
