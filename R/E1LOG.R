@@ -2,7 +2,6 @@ E1LOG <- function(data, group = Cod_setor) {
 
   # Logradouro
   # base Entorno03
-  rowSums(data[, c("V423", "V425", "V427")])/data$V422
   data %>%
     group_by( {{group}} ) %>%
     mutate(E1LOG = (
