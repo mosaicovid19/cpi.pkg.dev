@@ -17,7 +17,7 @@ VulIndex = function(basico = Basico, entorno = Entorno03, dom.i = Domicilio01, d
   entorno <- entorno %>%
     base_redux(vars.entorno) %>%
     # filtrar valores indesejados
-    filter(V422 != 0)
+    filter(V422 != 0) # n = 640
 
   dom.i <- dom.i %>%
     # V001 será filtrada e descartada
