@@ -1,4 +1,4 @@
-VulIndex = function(basico = Basico, entorno = Entorno03, dom.i = Domicilio01, dom.ii = Domicilio02, pessoa = Pessoa03, dom.renda = DomicilioRenda, resp.alfa = Responsavel02, group = Cod_setor){
+VulIndex = function(Basico = Basico, entorno = Entorno03, dom.i = Domicilio01, dom.ii = Domicilio02, pessoa = Pessoa03, dom.renda = DomicilioRenda, resp.alfa = Responsavel02, group = Cod_setor){
 
 # bases -------------------------------------------------------------------
 
@@ -11,7 +11,7 @@ VulIndex = function(basico = Basico, entorno = Entorno03, dom.i = Domicilio01, d
   vars.resp.alfa <- vars(V001, V093)
 
   # seleciona apenas as variáveis de interesse de cada DataFrame
-  basico <- basico %>%
+  Basico <- Basico %>%
     select({{group}}, Cod_setor, Situacao_setor, starts_with(c("Cod_", "Nome_")))
 
   entorno <- entorno %>%
@@ -94,7 +94,7 @@ VulIndex = function(basico = Basico, entorno = Entorno03, dom.i = Domicilio01, d
     dom.renda, by=c("Cod_setor"), suffix = c("_join_resp.alfa", "_dom.renda"))
 
   # Adiciona a informaÃ§Ã£o de bairro ao DataFrame que contem todas as demais informaÃ§Ãµes coletadas pelo Censo
-  resumo <- inner_join(basico, filter(resumo, V422!="0"), by=c("Cod_setor"), suffix = c("_join5", "_basico"))
+  resumo <- inner_join(Basico, filter(resumo, V422!="0"), by=c("Cod_setor"), suffix = c("_join5", "_basico"))
   # resumo <- resumo %>%
   #   # vars originarias de dom.renda (join5)
   #   rename(V012 = V012_join5,
