@@ -1,4 +1,4 @@
-VulIndex = function(Basico = Basico, Entorno03 = Entorno03, Domicilio01 = Domicilio01, Domicilio02 = Domicilio02, pessoa = Pessoa03, dom.renda = DomicilioRenda, resp.alfa = Responsavel02, group = Cod_setor){
+VulIndex = function(Basico = Basico, Entorno03 = Entorno03, Domicilio01 = Domicilio01, Domicilio02 = Domicilio02, Pessoa03 = Pessoa03, dom.renda = DomicilioRenda, resp.alfa = Responsavel02, group = Cod_setor){
 
 # bases -------------------------------------------------------------------
 
@@ -7,7 +7,7 @@ VulIndex = function(Basico = Basico, Entorno03 = Entorno03, Domicilio01 = Domici
   vars.Domicilio01 <- vars(V001, V050, V051, V052, V053, V054, V055, V056, V057, V058, V059, V081, V082, V083, V084, V085, V086, V087)
   vars.Domicilio02 <- vars(V001, V012, V016)
   vars.dom.renda <- vars(V002)
-  vars.pessoa <- vars(V001, V003, V004, V005, V006)
+  vars.Pessoa03 <- vars(V001, V003, V004, V005, V006)
   vars.resp.alfa <- vars(V001, V093)
 
   # seleciona apenas as variáveis de interesse de cada DataFrame
@@ -33,10 +33,10 @@ VulIndex = function(Basico = Basico, Entorno03 = Entorno03, Domicilio01 = Domici
     # filtrar valores indesejados
     filter(V001 >0) # n = 0
 
-  pessoa <- pessoa %>%
+  Pessoa03 <- Pessoa03 %>%
     # V001 será renomeada (V001p)
-    base_redux(vars.pessoa) %>%
-    # Renomear campo V001 da tabela pessoa para V001p
+    base_redux(vars.Pessoa03) %>%
+    # Renomear campo V001 da tabela Pessoa03 para V001p
     rename(V001p = V001) %>%
     # filtrar valores indesejados
     filter(V001p >0) # n = 0
@@ -89,7 +89,7 @@ VulIndex = function(Basico = Basico, Entorno03 = Entorno03, Domicilio01 = Domici
         inner_join(
           inner_join(Entorno03, Domicilio01, by=c("Cod_setor"), suffix = c("_entorno", "_dom01")),
           Domicilio02, by=c("Cod_setor"), suffix = c("_join_dom01", "_dom02")),
-        pessoa, by=c("Cod_setor"), suffix = c("_join_dom02", "_pessoa")),
+        Pessoa03, by=c("Cod_setor"), suffix = c("_join_dom02", "_pessoa")),
       resp.alfa, by=c("Cod_setor"), suffix = c("_join_pessoa", "_resp.alfa")),
     dom.renda, by=c("Cod_setor"), suffix = c("_join_resp.alfa", "_dom.renda"))
 
