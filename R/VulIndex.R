@@ -1,60 +1,60 @@
-VulIndex = function(basico = Basico, entorno = Entorno03, dom.i = Domicilio01, dom.ii = Domicilio02, pessoa = Pessoa03, dom.renda = DomicilioRenda, resp.alfa = Responsavel02, group = Cod_setor){
+VulIndex = function(Basico = Basico, Entorno03 = Entorno03, Domicilio01 = Domicilio01, Domicilio02 = Domicilio02, Pessoa03 = Pessoa03, DomicilioRenda = DomicilioRenda, Responsavel02 = Responsavel02, group = Cod_setor){
 
 # bases -------------------------------------------------------------------
 
   # definição de vars para auxílio ao select
-  vars.entorno <- vars(V422, V423, V425, V427, V429, V431, V433, V435, V437, V439, V447, V449, V451, V453, V455, V457, V472, V474, V476, V478, V480, V482)
-  vars.dom.i <- vars(V001, V050, V051, V052, V053, V054, V055, V056, V057, V058, V059, V081, V082, V083, V084, V085, V086, V087)
-  vars.dom.ii <- vars(V001, V012, V016)
-  vars.dom.renda <- vars(V002)
-  vars.pessoa <- vars(V001, V003, V004, V005, V006)
-  vars.resp.alfa <- vars(V001, V093)
+  vars.Entorno03 <- vars(V422, V423, V425, V427, V429, V431, V433, V435, V437, V439, V447, V449, V451, V453, V455, V457, V472, V474, V476, V478, V480, V482)
+  vars.Domicilio01 <- vars(V001, V050, V051, V052, V053, V054, V055, V056, V057, V058, V059, V081, V082, V083, V084, V085, V086, V087)
+  vars.Domicilio02 <- vars(V001, V012, V016)
+  vars.DomicilioRenda <- vars(V002)
+  vars.Pessoa03 <- vars(V001, V003, V004, V005, V006)
+  vars.Responsavel02 <- vars(V001, V093)
 
   # seleciona apenas as variáveis de interesse de cada DataFrame
-  basico <- basico %>%
+  Basico <- Basico %>%
     select({{group}}, Cod_setor, Situacao_setor, starts_with(c("Cod_", "Nome_")))
 
-  entorno <- entorno %>%
-    base_redux(vars.entorno) %>%
+  Entorno03 <- Entorno03 %>%
+    base_redux(vars.Entorno03) %>%
     # filtrar valores indesejados
     filter(V422 != 0) # n = 640
 
-  dom.i <- dom.i %>%
+  Domicilio01 <- Domicilio01 %>%
     # V001 será filtrada e descartada
-    base_redux(vars.dom.i) %>%
+    base_redux(vars.Domicilio01) %>%
     # filtrar valores indesejados
     filter(V001 >0) %>% # n = 0
     # descartar V001
     select(-V001)
 
-  dom.ii <- dom.ii %>%
+  Domicilio02 <- Domicilio02 %>%
     # V001 será mantida
-    base_redux(vars.dom.ii) %>%
+    base_redux(vars.Domicilio02) %>%
     # filtrar valores indesejados
     filter(V001 >0) # n = 0
 
-  pessoa <- pessoa %>%
+  Pessoa03 <- Pessoa03 %>%
     # V001 será renomeada (V001p)
-    base_redux(vars.pessoa) %>%
-    # Renomear campo V001 da tabela pessoa para V001p
+    base_redux(vars.Pessoa03) %>%
+    # Renomear campo V001 da tabela Pessoa03 para V001p
     rename(V001p = V001) %>%
     # filtrar valores indesejados
     filter(V001p >0) # n = 0
 
-  dom.renda <- dom.renda %>%
+  DomicilioRenda <- DomicilioRenda %>%
     # V002 será renomeada (V002DR)
-    base_redux(vars.dom.renda) %>%
+    base_redux(vars.DomicilioRenda) %>%
     # renomear V002
     rename(V002DR = V002)
 
-  resp.alfa <- resp.alfa %>%
+  Responsavel02 <- Responsavel02 %>%
     # V001 será renomeada (V001r)
-    base_redux(vars.resp.alfa) %>%
-    # Renomear campo V001 da tabela resp.alfa para V001r
+    base_redux(vars.Responsavel02) %>%
+    # Renomear campo V001 da tabela Responsavel02 para V001r
     rename(V001r = V001)
 
-  # variáveis do dataframe dom.i refletem o número de pessoas vivendo num determinado domicílio
-  dom.i <- dom.i %>%
+  # variáveis do dataframe Domicilio01 refletem o número de pessoas vivendo num determinado domicílio
+  Domicilio01 <- Domicilio01 %>%
     mutate(
       # como a ideia é ter número de pessoas por domicílio numa dada condição, multiplicamos o número de domicílios pelo número de pessoas
       # que vivem no domicílio
@@ -87,16 +87,16 @@ VulIndex = function(basico = Basico, entorno = Entorno03, dom.i = Domicilio01, d
     inner_join(
       inner_join(
         inner_join(
-          inner_join(entorno, dom.i, by=c("Cod_setor"), suffix = c("_entorno", "_dom.i")),
-          dom.ii, by=c("Cod_setor"), suffix = c("_join_dom.i", "_dom.ii")),
-        pessoa, by=c("Cod_setor"), suffix = c("_join_dom.ii", "_pessoa")),
-      resp.alfa, by=c("Cod_setor"), suffix = c("_join_pessoa", "_resp.alfa")),
-    dom.renda, by=c("Cod_setor"), suffix = c("_join_resp.alfa", "_dom.renda"))
+          inner_join(Entorno03, Domicilio01, by=c("Cod_setor"), suffix = c("_entorno", "_dom01")),
+          Domicilio02, by=c("Cod_setor"), suffix = c("_join_dom01", "_dom02")),
+        Pessoa03, by=c("Cod_setor"), suffix = c("_join_dom02", "_pessoa")),
+      Responsavel02, by=c("Cod_setor"), suffix = c("_join_pessoa", "_resp02")),
+    DomicilioRenda, by=c("Cod_setor"), suffix = c("_join_resp02", "_dom.renda"))
 
   # Adiciona a informaÃ§Ã£o de bairro ao DataFrame que contem todas as demais informaÃ§Ãµes coletadas pelo Censo
-  resumo <- inner_join(basico, filter(resumo, V422!="0"), by=c("Cod_setor"), suffix = c("_join5", "_basico"))
+  resumo <- inner_join(Basico, filter(resumo, V422!="0"), by=c("Cod_setor"), suffix = c("_join5", "_basico"))
   # resumo <- resumo %>%
-  #   # vars originarias de dom.renda (join5)
+  #   # vars originarias de DomicilioRenda (join5)
   #   rename(V012 = V012_join5,
   #          V003 = V003_join5,
   #          V004 = V004_join5,
@@ -132,18 +132,18 @@ VulIndex = function(basico = Basico, entorno = Entorno03, dom.i = Domicilio01, d
 
   # calcula o componente Domicílios e aplica os pesos
   # Requisitos:
-  # - Divide por: V422 (entorno), V001p, V001 (??)
+  # - Divide por: V422 (Entorno03), V001p, V001 (Domicilio02)
   # - V055, V056, V057, V058, V059
   # - V016
-  # - V012 (dom.renda)
-  # - V002 (dom.renda)
+  # - V012 (DomicilioRenda)
+  # - V002 (DomicilioRenda)
   comp_domicilio( group = {{group}} ) %>%
 
   # calcula o componente Pessoas e aplica os pesos
   # Requisitos:
-  # - Divide por: V422 (entorno), V001p, V001r
+  # - Divide por: V422 (Entorno03), V001p, V001r
   # - V081,V082, V083, V084, V085, V086, V087
-  # - V003, V004, V005, V006 (dom.renda)
+  # - V003, V004, V005, V006 (DomicilioRenda)
   # - V093
   comp_pessoas( group = {{group}} ) %>%
 
