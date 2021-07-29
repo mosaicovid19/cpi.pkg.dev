@@ -1,4 +1,4 @@
-VulIndex = function(Basico = Basico, Entorno03 = Entorno03, Domicilio01 = Domicilio01, Domicilio02 = Domicilio02, Pessoa03 = Pessoa03, DomicilioRenda = DomicilioRenda, resp.alfa = Responsavel02, group = Cod_setor){
+VulIndex = function(Basico = Basico, Entorno03 = Entorno03, Domicilio01 = Domicilio01, Domicilio02 = Domicilio02, Pessoa03 = Pessoa03, DomicilioRenda = DomicilioRenda, Responsavel02 = Responsavel02, group = Cod_setor){
 
 # bases -------------------------------------------------------------------
 
@@ -8,7 +8,7 @@ VulIndex = function(Basico = Basico, Entorno03 = Entorno03, Domicilio01 = Domici
   vars.Domicilio02 <- vars(V001, V012, V016)
   vars.DomicilioRenda <- vars(V002)
   vars.Pessoa03 <- vars(V001, V003, V004, V005, V006)
-  vars.resp.alfa <- vars(V001, V093)
+  vars.Responsavel02 <- vars(V001, V093)
 
   # seleciona apenas as variáveis de interesse de cada DataFrame
   Basico <- Basico %>%
@@ -47,10 +47,10 @@ VulIndex = function(Basico = Basico, Entorno03 = Entorno03, Domicilio01 = Domici
     # renomear V002
     rename(V002DR = V002)
 
-  resp.alfa <- resp.alfa %>%
+  Responsavel02 <- Responsavel02 %>%
     # V001 será renomeada (V001r)
-    base_redux(vars.resp.alfa) %>%
-    # Renomear campo V001 da tabela resp.alfa para V001r
+    base_redux(vars.Responsavel02) %>%
+    # Renomear campo V001 da tabela Responsavel02 para V001r
     rename(V001r = V001)
 
   # variáveis do dataframe Domicilio01 refletem o número de pessoas vivendo num determinado domicílio
@@ -90,8 +90,8 @@ VulIndex = function(Basico = Basico, Entorno03 = Entorno03, Domicilio01 = Domici
           inner_join(Entorno03, Domicilio01, by=c("Cod_setor"), suffix = c("_entorno", "_dom01")),
           Domicilio02, by=c("Cod_setor"), suffix = c("_join_dom01", "_dom02")),
         Pessoa03, by=c("Cod_setor"), suffix = c("_join_dom02", "_pessoa")),
-      resp.alfa, by=c("Cod_setor"), suffix = c("_join_pessoa", "_resp.alfa")),
-    DomicilioRenda, by=c("Cod_setor"), suffix = c("_join_resp.alfa", "_dom.renda"))
+      Responsavel02, by=c("Cod_setor"), suffix = c("_join_pessoa", "_resp02")),
+    DomicilioRenda, by=c("Cod_setor"), suffix = c("_join_resp02", "_dom.renda"))
 
   # Adiciona a informaÃ§Ã£o de bairro ao DataFrame que contem todas as demais informaÃ§Ãµes coletadas pelo Censo
   resumo <- inner_join(Basico, filter(resumo, V422!="0"), by=c("Cod_setor"), suffix = c("_join5", "_basico"))
