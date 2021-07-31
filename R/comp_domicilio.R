@@ -7,6 +7,10 @@ comp_domicilio <- function(data, group = Cod_setor) {
   # - V016
   # - V012 (DomicilioRenda)
   # - V002 (DomicilioRenda)
+
+  # a variável V002 vem do arquivo DomicilioRenda que descreve a renda total das regiões definidas pelo setor censitário
+  # ao dividir este valor total de rendas pelo número total de pessoas (representado pela variável V422) obtem-se a renda per capita da região
+
   data %>%
     # acrescenta variável D1BAN
     D1BAN(group = {{group}}) %>%

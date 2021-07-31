@@ -11,6 +11,7 @@ VulIndex = function(Basico = Basico, Entorno03 = Entorno03, Domicilio01 = Domici
   vars.Responsavel02 <- vars(V001, V093)
 
   # seleciona apenas as variáveis de interesse de cada DataFrame
+  # regiões onde o Censo identificou 0 pessoas, não servem para a análise, portanto tais registros devem ser removidos
   Basico <- Basico %>%
     select({{group}}, Cod_setor, Situacao_setor, starts_with(c("Cod_", "Nome_")))
 
@@ -93,7 +94,7 @@ VulIndex = function(Basico = Basico, Entorno03 = Entorno03, Domicilio01 = Domici
       Responsavel02, by=c("Cod_setor"), suffix = c("_join_pessoa", "_resp02")),
     DomicilioRenda, by=c("Cod_setor"), suffix = c("_join_resp02", "_dom.renda"))
 
-  # Adiciona a informaÃ§Ã£o de bairro ao DataFrame que contem todas as demais informaÃ§Ãµes coletadas pelo Censo
+  # Adiciona a informação de bairro ao DataFrame que contem todas as demais informações coletadas pelo Censo
   resumo <- inner_join(Basico, filter(resumo, V422!="0"), by=c("Cod_setor"), suffix = c("_join5", "_basico"))
   # resumo <- resumo %>%
   #   # vars originarias de DomicilioRenda (join5)
@@ -103,10 +104,6 @@ VulIndex = function(Basico = Basico, Entorno03 = Entorno03, Domicilio01 = Domici
   #          V005 = V005_join5,
   #          V006 = V006_join5)
 
-  # a variÃ¡vel V002 vem do arquivo DomicilioRenda que descreve a renda total das regiÃµes definidas pelo setor censitÃ¡rio
-  # ao dividir este valor total de rendas pelo nÃºmero total de pessoas (representado pela variÃ¡vel V422) obtem-se a renda per capita da regiÃ£o
-
-  # regiÃµes onde o Censo identificou 0 pessoas, nÃ£o servem para a anÃ¡lise, portanto tais registros devem ser removidos
   # o DataFrame selected.features contem apenas as variÃ¡veis que serÃ£o utilizadas para realizar os cÃ¡lculos
 
   # calcula a proporÃ§Ã£o de pessoas vivendo nas condiÃ§Ãµes descritas pelas variÃ¡veis selecionadas
