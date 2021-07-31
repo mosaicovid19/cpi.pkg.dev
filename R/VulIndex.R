@@ -117,18 +117,7 @@ VulIndex = function(Basico = Basico, Entorno03 = Entorno03, Domicilio01 = Domici
 
   # acrescenta todas as variáveis e componentes em novas colunas
   resumo %>%
-    comp_domicilio( group = {{group}} ) %>%
-    comp_entorno( group = {{group}} ) %>%
-    comp_pessoas( group = {{group}} ) %>%
-
-  # soma todas as componentes para formar o IVC
-  # subtraindo as componentes de banheiros e agua para nÃ£o penalizar as regiÃµes 100% estruturadas nesse quesito
-  # ipc <- (compDomRenda * .5) + (compEntorno * .2) + (compDomicilios * .2) + (compPessoas * .05)
-    mutate(ipc =
-             compEntorno    * (1/3) +
-             compPessoas    * (1/3) +
-             compDomicilios * (1/3)
-    ) %>%
+    ipc( group = {{group}} ) %>%
 
 # finalizacao -------------------------------------------------------------
 
