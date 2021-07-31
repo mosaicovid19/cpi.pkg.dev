@@ -1,4 +1,12 @@
 comp_domicilio <- function(data, group = Cod_setor) {
+
+  # calcula o componente Domicílios e aplica os pesos
+  # Requisitos:
+  # - Divide por: V422 (Entorno03), V001p, V001 (Domicilio02)
+  # - V055, V056, V057, V058, V059
+  # - V016
+  # - V012 (DomicilioRenda)
+  # - V002 (DomicilioRenda)
   data %>%
     # acrescenta variável D1BAN
     D1BAN(group = {{group}}) %>%

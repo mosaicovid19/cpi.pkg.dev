@@ -1,5 +1,15 @@
 comp_entorno <- function(data, group = Cod_setor) {
-  # calcula a componente Entorno do IVC e aplica os pesos
+
+  # calcula o componente Entorno e aplica os pesos
+  # Requisitos:
+  # - Divide por: V422
+  # - V423, V425, V427
+  # - V429, V431, V433
+  # - V435, V437, V439
+  # - V447, V449, V451
+  # - V453, V455, V457
+  # - V472, V474, V476
+  # - V478, V480, V482
   data %>%
     # acrescenta variável E1LOG
     E1LOG(group = {{group}}) %>%

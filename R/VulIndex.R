@@ -117,34 +117,8 @@ VulIndex = function(Basico = Basico, Entorno03 = Entorno03, Domicilio01 = Domici
 
   # acrescenta todas as variáveis e componentes em novas colunas
   resumo %>%
-
-  # calcula a componente Entorno do IVC e aplica os pesos
-  # Requisitos:
-  # - Divide por: V422
-  # - V423, V425, V427
-  # - V429, V431, V433
-  # - V435, V437, V439
-  # - V447, V449, V451
-  # - V453, V455, V457
-  # - V472, V474, V476
-  # - V478, V480, V482
   comp_entorno( group = {{group}} ) %>%
-
-  # calcula o componente Domicílios e aplica os pesos
-  # Requisitos:
-  # - Divide por: V422 (Entorno03), V001p, V001 (Domicilio02)
-  # - V055, V056, V057, V058, V059
-  # - V016
-  # - V012 (DomicilioRenda)
-  # - V002 (DomicilioRenda)
   comp_domicilio( group = {{group}} ) %>%
-
-  # calcula o componente Pessoas e aplica os pesos
-  # Requisitos:
-  # - Divide por: V422 (Entorno03), V001p, V001r
-  # - V081,V082, V083, V084, V085, V086, V087
-  # - V003, V004, V005, V006 (DomicilioRenda)
-  # - V093
   comp_pessoas( group = {{group}} ) %>%
 
   # soma todas as componentes para formar o IVC
