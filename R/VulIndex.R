@@ -77,9 +77,6 @@ VulIndex = function(Basico = Basico, Entorno03 = Entorno03, Domicilio01 = Domici
       V085 = V085*6,
       V086 = V086*7,
     )
-  # a linha comentada abaixo sÃ³ foi utilizada para verificar se os cÃ¡lculos nas 4 linhas acima faziam sentido
-  # descomentar caso queira verificar (compare a variÃ¡vel V001 de dom.i com a variÃ¡vel V422 do entorno)
-  # dom.i$V001 <- rowSums(dom.i[, c("V050", "V051", "V052", "V053", "V054", "V055", "V056", "V057", "V058", "V059")])
 
 # join --------------------------------------------------------------------
 
@@ -96,19 +93,6 @@ VulIndex = function(Basico = Basico, Entorno03 = Entorno03, Domicilio01 = Domici
 
   # Adiciona a informação de bairro ao DataFrame que contem todas as demais informações coletadas pelo Censo
   resumo <- inner_join(Basico, filter(resumo, V422!="0"), by=c("Cod_setor"), suffix = c("_join5", "_basico"))
-  # resumo <- resumo %>%
-  #   # vars originarias de DomicilioRenda (join5)
-  #   rename(V012 = V012_join5,
-  #          V003 = V003_join5,
-  #          V004 = V004_join5,
-  #          V005 = V005_join5,
-  #          V006 = V006_join5)
-
-  # o DataFrame selected.features contem apenas as variÃ¡veis que serÃ£o utilizadas para realizar os cÃ¡lculos
-
-  # calcula a proporÃ§Ã£o de pessoas vivendo nas condiÃ§Ãµes descritas pelas variÃ¡veis selecionadas
-  # features.abs <- selected.features
-  # features.abs <- resumo
 
 # calculo componentes -----------------------------------------------------
 
