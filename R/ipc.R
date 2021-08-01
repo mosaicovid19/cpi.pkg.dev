@@ -1,4 +1,4 @@
-ipc <- funcion(data, group = Cod_setor) {
+ipc <- function(data, group = Cod_setor) {
 
   # soma todas as componentes para formar o IPC
   # requisitos descritos nas funções de cada componente
