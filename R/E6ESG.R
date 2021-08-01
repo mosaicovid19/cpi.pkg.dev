@@ -1,9 +1,8 @@
-E6ESG <- function(data, group = Cod_setor) {
+E6ESG <- function(data) {
 
   #Esgoto
   # base Entorno03
   data %>%
-    group_by( {{group}} ) %>%
     mutate(E6ESG = (
       sum(V472, na.rm = TRUE) +
       sum(V474, na.rm = TRUE) +

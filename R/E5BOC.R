@@ -1,9 +1,8 @@
-E5BOC <- function(data, group = Cod_setor) {
+E5BOC <- function(data) {
 
   #Bueiro/Boca de lobo
   # base Entorno03
   data %>%
-    group_by( {{group}} ) %>%
     mutate(E5BOC = (
       sum(V453, na.rm = TRUE) +
       sum(V455, na.rm = TRUE) +

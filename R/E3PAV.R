@@ -1,9 +1,8 @@
-E3PAV <- function(data, group = Cod_setor) {
+E3PAV <- function(data) {
 
   #Pavimentação
   # base Entorno03
   data %>%
-    group_by( {{group}} ) %>%
     mutate(E3PAV = (
       sum(V435, na.rm = TRUE) +
       sum(V437, na.rm = TRUE) +

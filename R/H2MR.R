@@ -1,11 +1,10 @@
-H2MR <- function(data, group = Cod_setor) {
+H2MR <- function(data) {
 
   # calcula a variável Docmicilios com mulheres como mantenedoras
   # base Domicilio01 + Entorno03
 
   # Qtd pessoas domicios com mulheres como mantenedoras / Qtd pessoas dos domicilios
   data %>%
-    group_by( {{group}} ) %>%
     mutate(H2MR = 1 - (
       sum(V081, na.rm = TRUE) +
       sum(V082, na.rm = TRUE) +

@@ -1,9 +1,8 @@
-E1LOG <- function(data, group = Cod_setor) {
+E1LOG <- function(data) {
 
   # Logradouro
   # base Entorno03
   data %>%
-    group_by( {{group}} ) %>%
     mutate(E1LOG = (
       sum(V423, na.rm = TRUE) +
       sum(V425, na.rm = TRUE) +
