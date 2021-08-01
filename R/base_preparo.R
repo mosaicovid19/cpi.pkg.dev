@@ -1,6 +1,7 @@
 base_preparo <- function(Basico = Basico, Entorno03 = Entorno03, Domicilio01 = Domicilio01, Domicilio02 = Domicilio02, Pessoa03 = Pessoa03, DomicilioRenda = DomicilioRenda, Responsavel02 = Responsavel02, group = Cod_setor){
 
   # definição de vars para auxílio ao select
+  vars.Basico <- vars(Cod_setor, Situacao_setor, starts_with(c("Cod_", "Nome_")))
   vars.Entorno03 <- vars(V422, V423, V425, V427, V429, V431, V433, V435, V437, V439, V447, V449, V451, V453, V455, V457, V472, V474, V476, V478, V480, V482)
   vars.Domicilio01 <- vars(V001, V050, V051, V052, V053, V054, V055, V056, V057, V058, V059, V081, V082, V083, V084, V085, V086, V087)
   vars.Domicilio02 <- vars(V001, V012, V016)
@@ -11,7 +12,7 @@ base_preparo <- function(Basico = Basico, Entorno03 = Entorno03, Domicilio01 = D
   # seleciona apenas as variáveis de interesse de cada DataFrame
   # regiões onde o Censo identificou 0 pessoas, não servem para a análise, portanto tais registros devem ser removidos
   Basico <- Basico %>%
-    select({{group}}, Cod_setor, Situacao_setor, starts_with(c("Cod_", "Nome_")))
+    base_redux(vars.Basico, group = {{group}})
 
   Entorno03 <- Entorno03 %>%
     base_redux(vars.Entorno03) %>%
