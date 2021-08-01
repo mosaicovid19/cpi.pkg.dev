@@ -6,31 +6,11 @@ VulIndex <- function(Basico = Basico, Domicilio01 = Domicilio01, Domicilio02 = D
 
 # calculo componentes -----------------------------------------------------
 
-  # acrescenta todas as variáveis e componentes em novas colunas
-  resumo %>%
+    resumo %>%
     # Agrupamento
     group_by( {{group}} ) %>%
+    # acrescenta todas as variáveis e componentes em novas colunas
     ipc( group = {{group}} ) %>%
-
-# finalizacao -------------------------------------------------------------
-
-  count(ipc,
-        compDomicilios,
-        compEntorno,
-        compPessoas,
-        D1BAN,
-        D2AGU,
-        D3M5,
-        D4REN,
-        E1LOG,
-        E2ILU,
-        E3PAV,
-        E4MEI,
-        E5BOC,
-        E6ESG,
-        E7LIX,
-        H1NB,
-        H2MR,
-        H3RA,
-  )
+    # filtrar apenas colunas novas, em cada grupo
+    ipc_resumo()
 }
