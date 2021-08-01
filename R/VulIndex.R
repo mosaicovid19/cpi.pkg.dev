@@ -1,8 +1,8 @@
-VulIndex <- function(Basico = Basico, Domicilio01 = Domicilio01, Domicilio02 = Domicilio02, DomicilioRenda = DomicilioRenda, Entorno03 = Entorno03, Pessoa03 = Pessoa03, Responsavel02 = Responsavel02, group = Cod_setor) {
+VulIndex <- function(Basico = Basico, Domicilio01 = Domicilio01, Domicilio02 = Domicilio02, DomicilioRenda = DomicilioRenda, Entorno03 = Entorno03, Pessoa03 = Pessoa03, Responsavel02 = Responsavel02, con = NULL, group = Cod_setor) {
 
 # bases -------------------------------------------------------------------
 
-  resumo <- base_preparo(Basico, Domicilio01, Domicilio02, DomicilioRenda, Entorno03, Pessoa03, Responsavel02)
+  resumo <- base_preparo(Basico, Domicilio01, Domicilio02, DomicilioRenda, Entorno03, Pessoa03, Responsavel02, con)
 
   ## SQLite 3.33.0 não aguenta esse tranco todo
   ## Precisamos parar por aqui e coletar o resultado do preparo da base
