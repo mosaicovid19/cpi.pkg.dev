@@ -14,7 +14,7 @@ resposta <- resposta %>%
 
 # checkout develop branch
 # devtools::load_all(".")
-teste <- VulIndex(Basico, Domicilio01, Domicilio02, DomicilioRenda, Entorno03, Pessoa03, Responsavel02, group = Cod_setor) %>%
+teste <- VulIndex(con = con) %>%
   ungroup() %>% # desagrupar para performance do teste
   select(Cod_setor, ipc) %>%
   arrange(Cod_setor)
