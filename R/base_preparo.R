@@ -44,21 +44,6 @@ base_preparo <- function(Basico = Basico, Domicilio01 = Domicilio01, Domicilio02
     # Renomear campo V001 da tabela Responsavel02 para V001r
     rename(V001r = V001)
 
-  # variáveis do dataframe Domicilio01 refletem o número de pessoas vivendo num determinado domicílio
-  Domicilio01 <- Domicilio01 %>%
-    mutate(
-      # como a ideia é ter número de pessoas por domicílio numa dada condição, multiplicamos o número de domicílios pelo número de pessoas
-      # que vivem no domicílio
-      # similar ao que foi feita nas acima, só que este cálculo é para definir quantas pessoas vivem em domicílios que tem mulheres
-      # como mantenedoras
-      V081 = V081*2,
-      V082 = V082*3,
-      V083 = V083*4,
-      V084 = V084*5,
-      V085 = V085*6,
-      V086 = V086*7,
-    )
-
   # join --------------------------------------------------------------------
 
   # junta todos os DataFrames pela coluna Cod_setor
