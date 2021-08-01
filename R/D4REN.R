@@ -6,11 +6,11 @@ D4REN <- function(data, group = Cod_setor) {
   data %>%
     group_by( {{group}} ) %>%
     mutate(D4REN = case_when(
-      sum(V002DR)/sum(V001p) > 2090   ~ 1.0,
-      sum(V002DR)/sum(V001p) > 1045   ~ 0.7,
-      sum(V002DR)/sum(V001p) >  522.5 ~ 0.5,
-      sum(V002DR)/sum(V001p) >  178   ~ 0.3,
-      sum(V002DR)/sum(V001p) >   89   ~ 0.2,
-      TRUE                            ~ 0.1
+      sum(V002DR, na.rm = TRUE)/sum(V001p, na.rm = TRUE) > 2090   ~ 1.0,
+      sum(V002DR, na.rm = TRUE)/sum(V001p, na.rm = TRUE) > 1045   ~ 0.7,
+      sum(V002DR, na.rm = TRUE)/sum(V001p, na.rm = TRUE) >  522.5 ~ 0.5,
+      sum(V002DR, na.rm = TRUE)/sum(V001p, na.rm = TRUE) >  178   ~ 0.3,
+      sum(V002DR, na.rm = TRUE)/sum(V001p, na.rm = TRUE) >   89   ~ 0.2,
+      TRUE                                                        ~ 0.1
     ))
 }
