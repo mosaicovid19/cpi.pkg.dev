@@ -2,14 +2,14 @@ VulIndex <- function(Basico = Basico, Domicilio01 = Domicilio01, Domicilio02 = D
 
 # bases -------------------------------------------------------------------
 
-resumo <- base_preparo(Basico, Domicilio01, Domicilio02, DomicilioRenda, Entorno03, Pessoa03, Responsavel02)
+  resumo <- base_preparo(Basico, Domicilio01, Domicilio02, DomicilioRenda, Entorno03, Pessoa03, Responsavel02)
 
 # calculo componentes -----------------------------------------------------
 
   # acrescenta todas as variáveis e componentes em novas colunas
   resumo %>%
-  # Agrupamento
-  group_by( {{group}} ) %>%
+    # Agrupamento
+    group_by( {{group}} ) %>%
     ipc( group = {{group}} ) %>%
 
 # finalizacao -------------------------------------------------------------
