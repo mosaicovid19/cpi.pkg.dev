@@ -8,6 +8,5 @@ E4MEI <- function(data, group = Cod_setor) {
       sum(V447, na.rm = TRUE) +
       sum(V449, na.rm = TRUE) +
       sum(V451, na.rm = TRUE)
-    ) / sum(V422, na.rm = TRUE)) %>%
-    pull(E4MEI)
+    ) / sum(V422, na.rm = TRUE))
 }

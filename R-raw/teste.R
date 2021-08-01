@@ -7,9 +7,14 @@ library(censo2010brasil)
 # save(resposta, file = "data/ipc_check.rda")
 # rm(VulIndex)
 if(!exists("resposta")) load("data/ipc_check.rda")
+resposta <- resposta %>%
+  select(Cod_setor, ipc) %>%
+  arrange(Cod_setor)
 
 # checkout develop branch
 devtools::load_all(".")
-teste <- VulIndex(basico = Basico, entorno = Entorno03, dom.i = Domicilio01, dom.ii = Domicilio02, pessoa = Pessoa03, dom.renda = DomicilioRenda, resp.alfa = Responsavel02)
+teste <- VulIndex(group = Cod_setor) %>%
+  select(Cod_setor, ipc) %>%
+  arrange(Cod_setor)
 
-print(all.equal(resposta %>% select(Cod_UF:ipc), teste))
+print(all.equal(resposta, teste))

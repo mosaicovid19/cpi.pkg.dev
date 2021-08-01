@@ -9,6 +9,5 @@ H1NB <- function(data, group = Cod_setor) {
       sum(V004, na.rm = TRUE) +
       sum(V005, na.rm = TRUE) +
       sum(V006, na.rm = TRUE)
-    ) / sum(V001p, na.rm = TRUE)) %>%
-    pull(H1NB)
+    ) / sum(V001p, na.rm = TRUE))
 }
