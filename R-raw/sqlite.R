@@ -1,0 +1,12 @@
+library(dplyr)
+# library(DBI)
+# con <- dbConnect(odbc::odbc(), .connection_string = "Driver={SQLite3};Database=/home/philsf/Downloads/Censo2010/bases_censo.sqlite",
+                 # timeout = 10)
+Basico <- tbl(con, "Basico")
+Domicilio01 <- tbl(con, "Domicilio01")
+Domicilio02 <- tbl(con, "Domicilio02")
+DomicilioRenda <- tbl(con, "DomicilioRenda")
+Entorno03 <- tbl(con, "Entorno03")
+Pessoa03 <- tbl(con, "Pessoa03")
+Responsavel02 <- tbl(con, "Responsavel02")
+# dbDisconnect(con)

@@ -1,6 +1,6 @@
-library(tidyverse)
-library(censo2010brasil)
-library(cpi.pkg.dev)
+library(dplyr)
+# library(censo2010brasil)
+# library(cpi.pkg.dev)
 
 # checkout 518ad6b e calcular a resposta
 # source("R/VulIndex.R", encoding = "UTF-8")
