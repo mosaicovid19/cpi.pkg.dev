@@ -8,10 +8,16 @@ D3M5 <- function(data) {
   # base Domicilio01 + Entorno03
   data %>%
     mutate(D3M5 = 1 - (
-      sum(V055, na.rm = TRUE) +
-      sum(V056, na.rm = TRUE) +
-      sum(V057, na.rm = TRUE) +
-      sum(V058, na.rm = TRUE) +
-      sum(V059, na.rm = TRUE)
+      # como a ideia é ter número de pessoas por domicílio numa dada condição,
+      # multiplicamos o número de domicílios pelo número de pessoas que vivem no domicílio
+      # sum(V051*2, na.rm = TRUE) +
+      # sum(V052*3, na.rm = TRUE) +
+      # sum(V053*4, na.rm = TRUE) +
+      # sum(V055*5, na.rm = TRUE) +
+      sum(V055*6, na.rm = TRUE) +
+      sum(V056*7, na.rm = TRUE) +
+      sum(V057*8, na.rm = TRUE) +
+      sum(V058*9, na.rm = TRUE) +
+      sum(V059*10, na.rm = TRUE)
       ) / sum(V422, na.rm = TRUE))
 }
