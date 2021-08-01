@@ -9,13 +9,12 @@ library(cpi.pkg.dev)
 # rm(VulIndex)
 if(!exists("resposta")) load("data/ipc_check.rda")
 resposta <- resposta %>%
-  select(Cod_setor, ipc) %>%
-  arrange(Cod_setor)
+  group_by(Cod_setor) %>%
+  select(ipc)
 
 # checkout develop branch
 # devtools::load_all(".")
-teste <- VulIndex(group = Cod_setor) %>%
-  select(Cod_setor, ipc) %>%
-  arrange(Cod_setor)
+teste <- VulIndex(Basico, Domicilio01, Domicilio02, DomicilioRenda, Entorno03, Pessoa03, Responsavel02, group = Cod_setor) %>%
+  select(ipc)
 
 print(all.equal(resposta, teste))
