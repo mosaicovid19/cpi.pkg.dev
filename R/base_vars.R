@@ -10,5 +10,5 @@ base_vars <- function(base) {
     Responsavel02 = vars(V001, V093)
   )
 
-  base_vars[base] %>% unlist()
+  base_vars[[base]]
 }
