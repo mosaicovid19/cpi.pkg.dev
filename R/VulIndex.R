@@ -32,7 +32,5 @@ resumo <- base_preparo(Basico, Domicilio01, Domicilio02, DomicilioRenda, Entorno
         H1NB,
         H2MR,
         H3RA,
-  ) %>%
-    ungroup()
-
+  )
 }
