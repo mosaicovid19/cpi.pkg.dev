@@ -1,8 +1,8 @@
-VulIndex = function(Basico = Basico, Entorno03 = Entorno03, Domicilio01 = Domicilio01, Domicilio02 = Domicilio02, Pessoa03 = Pessoa03, DomicilioRenda = DomicilioRenda, Responsavel02 = Responsavel02, group = Cod_setor){
+VulIndex <- function(Basico = Basico, Domicilio01 = Domicilio01, Domicilio02 = Domicilio02, Entorno03 = Entorno03, DomicilioRenda = DomicilioRenda, Pessoa03 = Pessoa03, Responsavel02 = Responsavel02, group = Cod_setor) {
 
 # bases -------------------------------------------------------------------
 
-resumo <- base_preparo(Basico, Entorno03, Domicilio01, Domicilio02, Pessoa03, DomicilioRenda, Responsavel02, group = {{group}})
+resumo <- base_preparo(group = {{group}})
 
 # calculo componentes -----------------------------------------------------
 
