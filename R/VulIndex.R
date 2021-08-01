@@ -2,7 +2,7 @@ VulIndex <- function(Basico = Basico, Domicilio01 = Domicilio01, Domicilio02 = D
 
 # bases -------------------------------------------------------------------
 
-resumo <- base_preparo(Basico, Domicilio01, Domicilio02, DomicilioRenda, Entorno03, Pessoa03, Responsavel02, group = {{group}})
+resumo <- base_preparo(group = {{group}})
 
 # calculo componentes -----------------------------------------------------
 
