@@ -1,4 +1,4 @@
-VulIndex <- function(Basico = Basico, Domicilio01 = Domicilio01, Domicilio02 = Domicilio02, Entorno03 = Entorno03, DomicilioRenda = DomicilioRenda, Pessoa03 = Pessoa03, Responsavel02 = Responsavel02, group = Cod_setor) {
+VulIndex <- function(Basico = Basico, Domicilio01 = Domicilio01, Domicilio02 = Domicilio02, DomicilioRenda = DomicilioRenda, Entorno03 = Entorno03, Pessoa03 = Pessoa03, Responsavel02 = Responsavel02, group = Cod_setor) {
 
 # bases -------------------------------------------------------------------
 
