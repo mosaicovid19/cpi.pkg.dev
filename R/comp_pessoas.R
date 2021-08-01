@@ -1,4 +1,4 @@
-comp_pessoas <- function(data, group = Cod_setor) {
+comp_pessoas <- function(data) {
 
   # calcula o componente Pessoas e aplica os pesos
   # Requisitos:
@@ -8,11 +8,11 @@ comp_pessoas <- function(data, group = Cod_setor) {
   # - V093
   data %>%
     # acrescenta variável H1NB
-    H1NB(group = {{group}}) %>%
+    H1NB() %>%
     # acrescenta variável H2MR
-    H2MR(group = {{group}}) %>%
+    H2MR() %>%
     # acrescenta variável H3RA
-    H3RA(group = {{group}}) %>%
+    H3RA() %>%
     # acrescenta componente humano
     mutate(
       compPessoas =
