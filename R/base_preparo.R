@@ -71,17 +71,12 @@ base_preparo <- function(Basico = Basico, Domicilio01 = Domicilio01, Domicilio02
   # join --------------------------------------------------------------------
 
   # junta todos os DataFrames pela coluna Cod_setor
-  resumo <- inner_join(
-    inner_join(
-      inner_join(
-        inner_join(
-          inner_join(Entorno03, Domicilio01, by=c("Cod_setor"), suffix = c("_entorno", "_dom01")),
-          Domicilio02, by=c("Cod_setor"), suffix = c("_join_dom01", "_dom02")),
-        Pessoa03, by=c("Cod_setor"), suffix = c("_join_dom02", "_pessoa")),
-      Responsavel02, by=c("Cod_setor"), suffix = c("_join_pessoa", "_resp02")),
-    DomicilioRenda, by=c("Cod_setor"), suffix = c("_join_resp02", "_dom.renda"))
-
-  # Adiciona a informação de bairro ao DataFrame que contem todas as demais informações coletadas pelo Censo
-  resumo <- inner_join(Basico, filter(resumo, V422!="0"), by=c("Cod_setor"), suffix = c("_join5", "_basico"))
+  Entorno03 %>%
+    inner_join(Domicilio01, by=c("Cod_setor"), suffix = c("_entorno", "_dom01")) %>%
+    inner_join(Domicilio02, by=c("Cod_setor"), suffix = c("_join_dom01", "_dom02")) %>%
+    inner_join(Pessoa03, by=c("Cod_setor"), suffix = c("_join_dom02", "_pessoa")) %>%
+    inner_join(Responsavel02, by=c("Cod_setor"), suffix = c("_join_pessoa", "_resp02")) %>%
+    inner_join(DomicilioRenda, by=c("Cod_setor"), suffix = c("_join_resp02", "_dom.renda")) %>%
+    inner_join(Basico, by=c("Cod_setor"), suffix = c("_join5", "_basico"))
 
 }
