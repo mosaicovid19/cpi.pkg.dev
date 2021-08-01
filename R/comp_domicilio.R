@@ -1,11 +1,11 @@
-comp_domicilio <- function(data) {
-  D1BAN <- D1BAN(data)
+comp_domicilio <- function(data, group = Cod_setor) {
+  D1BAN <- D1BAN(data, group = {{group}})
 
-  D2AGU <- D2AGU(data)
+  D2AGU <- D2AGU(data, group = {{group}})
 
-  D3M5 <- D3M5(data)
+  D3M5 <- D3M5(data, group = {{group}})
 
-  D4REN <- D4REN(data)
+  D4REN <- D4REN(data, group = {{group}})
 
   compDomicilios <-
     D2AGU * 1/5 +

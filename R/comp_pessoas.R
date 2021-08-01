@@ -1,10 +1,10 @@
-comp_pessoas <- function(data) {
+comp_pessoas <- function(data, group = Cod_setor) {
 
-  H1NB <- H1NB(data)
+  H1NB <- H1NB(data, group = {{group}})
 
-  H2MR <- H2MR(data)
+  H2MR <- H2MR(data, group = {{group}})
 
-  H3RA <- H3RA(data)
+  H3RA <- H3RA(data, group = {{group}})
 
   compPessoas <-
     H1NB * 1/3 +

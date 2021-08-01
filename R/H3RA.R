@@ -1,6 +1,9 @@
-H3RA <- function(data) {
+H3RA <- function(data, group = Cod_setor) {
 
   # calcula % responsaveis analfa.
   # base Responsavel02
-  (1 - rowSums(data[,c("V093")]/data$V001r))
+  data %>%
+    group_by( {{group}} ) %>%
+    mutate(H3RA = 1 - sum(V093, na.rm = TRUE) / sum(V001r, na.rm = TRUE)) %>%
+    pull(H3RA)
 }
