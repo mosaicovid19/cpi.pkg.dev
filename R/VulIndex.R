@@ -10,7 +10,7 @@ VulIndex <- function(Basico = Basico, Domicilio01 = Domicilio01, Domicilio02 = D
     # Agrupamento
     group_by( {{group}} ) %>%
     # acrescenta todas as variáveis e componentes em novas colunas
-    ipc( group = {{group}} ) %>%
+    ipc() %>%
     # filtrar apenas colunas novas, em cada grupo
     ipc_resumo()
 }

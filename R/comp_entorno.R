@@ -1,4 +1,4 @@
-comp_entorno <- function(data, group = Cod_setor) {
+comp_entorno <- function(data) {
 
   # calcula o componente Entorno e aplica os pesos
   # Requisitos:
@@ -12,19 +12,19 @@ comp_entorno <- function(data, group = Cod_setor) {
   # - V478, V480, V482
   data %>%
     # acrescenta variável E1LOG
-    E1LOG(group = {{group}}) %>%
+    E1LOG() %>%
     # acrescenta variável E2ILU
-    E2ILU(group = {{group}}) %>%
+    E2ILU() %>%
     # acrescenta variável E3PAV
-    E3PAV(group = {{group}}) %>%
+    E3PAV() %>%
     # acrescenta variável E4MEI
-    E4MEI(group = {{group}}) %>%
+    E4MEI() %>%
     # acrescenta variável E5BOC
-    E5BOC(group = {{group}}) %>%
+    E5BOC() %>%
     # acrescenta variável E6ESG
-    E6ESG(group = {{group}}) %>%
+    E6ESG() %>%
     # acrescenta variável E7LIX
-    E7LIX(group = {{group}}) %>%
+    E7LIX() %>%
     # acrescenta componente entorno
     mutate(
       compEntorno =

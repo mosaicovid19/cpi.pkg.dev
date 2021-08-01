@@ -1,4 +1,4 @@
-base_preparo <- function(Basico = Basico, Domicilio01 = Domicilio01, Domicilio02 = Domicilio02, DomicilioRenda = DomicilioRenda, Entorno03 = Entorno03, Pessoa03 = Pessoa03, Responsavel02 = Responsavel02, group = Cod_setor){
+base_preparo <- function(Basico = Basico, Domicilio01 = Domicilio01, Domicilio02 = Domicilio02, DomicilioRenda = DomicilioRenda, Entorno03 = Entorno03, Pessoa03 = Pessoa03, Responsavel02 = Responsavel02){
 
   # seleciona apenas as variáveis de interesse de cada DataFrame
   # regiões onde o Censo identificou 0 pessoas, não servem para a análise, portanto tais registros devem ser removidos

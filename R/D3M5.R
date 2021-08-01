@@ -1,4 +1,4 @@
-D3M5 <- function(data, group = Cod_setor) {
+D3M5 <- function(data) {
 
   # Calcula componente de calculo mais de duas pessoas por domicílio
   # Calcula % de pessoas que moram sós ou com até mais uma outra pessoa
@@ -7,7 +7,6 @@ D3M5 <- function(data, group = Cod_setor) {
   # 3 - Divide o resultado de 2 pelo número total de pessoas vivendo com mais do que 2 pessoas
   # base Domicilio01 + Entorno03
   data %>%
-    group_by( {{group}} ) %>%
     mutate(D3M5 = 1 - (
       sum(V055, na.rm = TRUE) +
       sum(V056, na.rm = TRUE) +

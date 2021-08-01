@@ -1,4 +1,4 @@
-comp_domicilio <- function(data, group = Cod_setor) {
+comp_domicilio <- function(data) {
 
   # calcula o componente Domicílios e aplica os pesos
   # Requisitos:
@@ -13,13 +13,13 @@ comp_domicilio <- function(data, group = Cod_setor) {
 
   data %>%
     # acrescenta variável D1BAN
-    D1BAN(group = {{group}}) %>%
+    D1BAN() %>%
     # acrescenta variável D2AGU
-    D2AGU(group = {{group}}) %>%
+    D2AGU() %>%
     # acrescenta variável D3M5
-    D3M5(group = {{group}}) %>%
+    D3M5() %>%
     # acrescenta variável D4REN
-    D4REN(group = {{group}}) %>%
+    D4REN() %>%
     # acrescenta componente domicílios
     mutate(
       compDomicilios =
