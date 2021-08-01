@@ -15,13 +15,13 @@ base_preparo <- function(Basico = Basico, Entorno03 = Entorno03, Domicilio01 = D
     base_redux(vars.Basico, group = {{group}})
 
   Entorno03 <- Entorno03 %>%
-    base_redux(vars.Entorno03) %>%
+    base_redux(vars.Entorno03, group = {{group}}) %>%
     # filtrar valores indesejados
     filter(V422 != 0) # n = 640
 
   Domicilio01 <- Domicilio01 %>%
     # V001 será filtrada e descartada
-    base_redux(vars.Domicilio01) %>%
+    base_redux(vars.Domicilio01, group = {{group}}) %>%
     # filtrar valores indesejados
     filter(V001 >0) %>% # n = 0
     # descartar V001
@@ -29,13 +29,13 @@ base_preparo <- function(Basico = Basico, Entorno03 = Entorno03, Domicilio01 = D
 
   Domicilio02 <- Domicilio02 %>%
     # V001 será mantida
-    base_redux(vars.Domicilio02) %>%
+    base_redux(vars.Domicilio02, group = {{group}}) %>%
     # filtrar valores indesejados
     filter(V001 >0) # n = 0
 
   Pessoa03 <- Pessoa03 %>%
     # V001 será renomeada (V001p)
-    base_redux(vars.Pessoa03) %>%
+    base_redux(vars.Pessoa03, group = {{group}}) %>%
     # Renomear campo V001 da tabela Pessoa03 para V001p
     rename(V001p = V001) %>%
     # filtrar valores indesejados
@@ -43,13 +43,13 @@ base_preparo <- function(Basico = Basico, Entorno03 = Entorno03, Domicilio01 = D
 
   DomicilioRenda <- DomicilioRenda %>%
     # V002 será renomeada (V002DR)
-    base_redux(vars.DomicilioRenda) %>%
+    base_redux(vars.DomicilioRenda, group = {{group}}) %>%
     # renomear V002
     rename(V002DR = V002)
 
   Responsavel02 <- Responsavel02 %>%
     # V001 será renomeada (V001r)
-    base_redux(vars.Responsavel02) %>%
+    base_redux(vars.Responsavel02, group = {{group}}) %>%
     # Renomear campo V001 da tabela Responsavel02 para V001r
     rename(V001r = V001)
 
