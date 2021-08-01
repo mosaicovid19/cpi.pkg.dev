@@ -1,4 +1,4 @@
-base_redux <- function(data, vars, group = Cod_setor) {
+base_redux <- function(data, vars) {
   data %>%
-    select({{group}}, Cod_setor, !!!vars)
+    select(Cod_setor, !!!vars)
 }
